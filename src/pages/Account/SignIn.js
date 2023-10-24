@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logoLight } from "../../assets/images";
 
 const SignIn = () => {
@@ -14,6 +14,7 @@ const SignIn = () => {
   // ============= Error Msg End here ===================
   const [successMsg, setSuccessMsg] = useState("");
   // ============= Event Handler Start here =============
+  const navigate = useNavigate();
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrEmail("");
@@ -23,9 +24,9 @@ const SignIn = () => {
     setErrPassword("");
   };
   // ============= Event Handler End here ===============
-  const handleSignUp = (e) => {
+  const handleSignin = (e) => {
     e.preventDefault();
-    
+
     if (!email) {
       setErrEmail("Enter your email");
     }
@@ -41,13 +42,16 @@ const SignIn = () => {
       setEmail("");
       setPassword("");
     }
-    const userData = {
-      username: 'exampleUser',
-      email: 'user@example.com',
-      // tambahkan data pengguna lainnya
+    const dummyData = {
+      email: 'frdy21st@gmail.com',
+      password: 'frdy1234',
     };
-    localStorage.setItem('userData', JSON.stringify(userData));
-  
+    if (email === dummyData.email && password ===
+      dummyData.password) {
+      navigate("/profile");
+    } else {
+      alert('login gagal. periksa kembali email dan password anda.');
+    };
   };
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -144,7 +148,7 @@ const SignIn = () => {
                 {/* Email */}
                 <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
-                    Work Email
+                    Email
                   </p>
                   <input
                     onChange={handleEmail}
@@ -182,7 +186,7 @@ const SignIn = () => {
                 </div>
 
                 <button
-                  onClick={handleSignUp}
+                  onClick={handleSignin}
                   className="bg-primeColor hover:bg-black text-gray-200 hover:text-white cursor-pointer w-full text-base font-medium h-10 rounded-md  duration-300"
                 >
                   Sign In

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { logoLight } from "../../assets/images";
+// import axios from "axios";
 
 const SignUp = () => {
   // ============= Initial State Start here =============
@@ -71,6 +72,15 @@ const SignUp = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
+
+    const dummyData = {
+      clientName: clientName,
+      email: email,
+      phone: phone,
+      password: password
+    };
+
+    console.log("Dummy Data:",dummyData);
     if (checked) {
       if (!clientName) {
         setErrClientName("Enter your name");
@@ -124,14 +134,18 @@ const SignUp = () => {
         setEmail("");
         setPhone("");
         setPassword("");
+
+        alert("Sign up Sucesfull!");
         // setAddress("");
         // setCity("");
         // setCountry("");
         // setZip("");
+        setTimeout(() =>{
+          console.log("Sign up successful!");
+          navigate("/signin");
+        }, 2000);
       }
     }
-    // setelah login arahkan ke halaman profil
-    navigate("/profil");
   };
   return (
     <div className="w-full h-screen flex items-center justify-start">
