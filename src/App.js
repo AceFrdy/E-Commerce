@@ -20,6 +20,10 @@ import Payment from "./pages/payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
 import Profile from "./pages/Account/Profile";
+import ProfileData from "./pages/Account/pages/ProfileData";
+import Alamat from "./pages/Account/pages/Alamat";
+import AlamatEmpty from "./pages/Account/pages/AlamatEmpty";
+import Pesanan from "./pages/Account/pages/Pesanan";
 
 const Layout = () => {
   return (
@@ -41,6 +45,11 @@ const router = createBrowserRouter(
         {/* ==================== Header Navlink Start here =================== */}
         <Route index element={<Home />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
+        <Route path="/profiledata" element={<ProfileData />}></Route>
+        <Route path="/alamat" element={<Alamat />}></Route>
+        <Route path="/alamatisi" element={<AlamatEmpty />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/pesanan" element={<Pesanan />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
@@ -49,7 +58,6 @@ const router = createBrowserRouter(
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
-      <Route path="/profile" element={<Profile />}></Route>
     </Route>
   )
 );

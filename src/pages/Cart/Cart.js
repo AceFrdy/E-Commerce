@@ -7,7 +7,9 @@ import { resetCart } from "../../redux/orebiSlice";
 import { emptyCart } from "../../assets/images/index";
 import ItemCard from "./ItemCard";
 import { GoTriangleDown } from "react-icons/go";
-
+import { FaShoppingCart } from "react-icons/fa";
+import { IoPricetags } from "react-icons/io5";
+import { IoCopy } from "react-icons/io5";
 const Cart = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.orebiReducer.products);
@@ -33,23 +35,64 @@ const Cart = () => {
     }
   }, [totalAmt]);
   return (
-    <div className="max-w-container mx-auto px-4">
+    <div className="max-w-container mx-auto px-4 ">
       <Breadcrumbs title="Cart" />
       {products.length > 0 ? (
         <div className="pb-20">
-          <div className="w-full h-20 bg-[#F5F7F7] text-primeColor hidden lgl:grid grid-cols-5 place-content-center px-6 text-lg font-titleFont font-semibold">
-            <h2 className="col-span-2">Product</h2>
-            <h2>Price</h2>
-            <h2>Quantity</h2>
-            <h2>Sub Total</h2>
-          </div>
-          <div className="mt-5">
-            {products.map((item) => (
-              <div key={item._id}>
-                <ItemCard item={item} />
+          <div className="w-full h-full flex pb-20 gap-2">
+            <div className="w-[70%] lgl:w-65%] hidden mdl:inline-flex w-full h-full">
+              <div className="flex flex-col space-y-2">
+                {/* <div className="flex"> */}
+                <div className="rounded-lg w-full h-full bg-[#EBEBEB] text-primeColor hidden lgl:grid grid-rows-1 grid-cols-2 grid-flow-col gap-2 px-3 text-lg font-titleFont font-semibold">
+                  <h2 className="mt-1 flex relative gap-2">
+                    <FaShoppingCart className="h-6 w-7" />
+                    Product</h2>
+                </div>
+                <div className="mt-1 ">
+                  <div className="w-full rounded-lg h-full bg-[#EBEBEB] text-primeColor hidden lgl:grid grid-rows-2 grid-flow-col gap-4 place-content-center px-6 text-lg font-titleFont font-semibold">
+                    {products.map((item) => (
+                      <div key={item._id}>
+                        <ItemCard item={item} />
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+                {/* </div> */}
               </div>
-            ))}
+            </div>
+            <div className="w-full mdl:w-[30%] lgl:w-[35%] h-full flex flex-col gap-2">
+              <div className="relative rounded-lg w-full h-full bg-[#EBEBEB] text-primeColor hidden lgl:grid grid-rows-1  grid-cols-2 grid-flow-col gap-2 px-2 text-lg font-titleFont font-semibold grid grid-rows-3 grid-flow-col gap-4">
+                <h2 className="mt-1 flex items-center gap-1">
+                  <IoPricetags className="h-5 w-7" />Kode Promo</h2>
+                <div className="absolute inset-x-12 bottom-0 h-16"><input
+                  className=" w-48 h-12 border-b bg-white px-4 text-primeColor text-lg placeholder:text-base outline-none"
+                  type="text"
+                  placeholder="Masukan Kode ...*"
+                />
+                  <button className="bg-primeColor cursor-pointer hover:bg-black active:bg-gray-900 px-2.5 py-2.5 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">
+                    Gunakan
+                  </button>
+                </div>
+              </div>
+              <div>
+                <div className="relative h-72 w-50 rounded-lg w-full h-full bg-[#EBEBEB] text-primeColor hidden lgl:grid grid-rows-1  grid-cols-2 grid-flow-col gap-2 px-2 text-lg font-titleFont font-semibold grid grid-rows-3 grid-flow-col gap-4">
+                  <h2 className="flex items-center gap-1">
+                    <IoCopy className="ml-1 h-5 w-7" />Ringkasan</h2>
+                  <div className="absolute inset-x-12 bottom-0 h-16"><input
+                    className=" w-48 h-12 border-b bg-white px-4 text-primeColor text-lg placeholder:text-base outline-none"
+                    type="text"
+                    placeholder="Masukan Kode ...*"
+                  />
+                    <button className="bg-primeColor cursor-pointer hover:bg-black active:bg-gray-900 px-2.5 py-2.5 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">
+                      Gunakan
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
 
           <button
             onClick={() => dispatch(resetCart())}

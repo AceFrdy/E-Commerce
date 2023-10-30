@@ -70,7 +70,7 @@ const ProfileData = () => {
         <div>
           <button
             onClick={() => alert('Tersimpan')}
-            className="bg-white text-lightText w-[20%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
+            className="rounded-md bg-primeColor cursor-pointer hover:bg-black active:bg-gray-900 px-2.5 py-2.5 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300"
           >
             Simpan
           </button>
