@@ -33,18 +33,18 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
             girdViewActive
               ? "bg-primeColor text-white"
               : "border-[1px] border-gray-300 text-[#737373]"
-          } w-8 h-8 text-lg flex items-center justify-center cursor-pointer gridView`}
+          } w-8 h-8 text-lg flex items-center invisible justify-center cursor-pointer gridView`}
         >
-          <BsGridFill />
+          {/* <BsGridFill /> */}
         </span>
         <span
           className={`${
             listViewActive
               ? "bg-primeColor text-white"
               : "border-[1px] border-gray-300 text-[#737373]"
-          } w-8 h-8 text-base flex items-center justify-center cursor-pointer listView`}
+          } w-8 h-8 text-base flex items-center invisible justify-center cursor-pointer listView`}
         >
-          <ImList />
+          {/* <ImList /> */}
         </span>
       </div>
       {/* =========================================================

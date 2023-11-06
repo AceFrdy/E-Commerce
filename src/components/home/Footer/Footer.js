@@ -4,7 +4,7 @@ import { FaFacebook, FaWhatsapp, FaLinkedin, FaInstagram, FaYoutube } from "reac
 import FooterListTitle from "./FooterListTitle";
 // import { paymentCard } from "../../../assets/images";
 // import Image from "../../designLayouts/Image";
-import { GoTriangleDown } from "react-icons/go";
+// import { GoTriangleDown } from "react-icons/go";
 // import { HiOutlineMenuAlt4 } from "react-icons/hi";
 // import { useNavigate } from "react-router-dom";
 // import { useSelector } from "react-redux";
@@ -102,8 +102,8 @@ const Footer = () => {
             <p className="text-xl font-bodyFont font-semibold mb-6">
               Hubungi Kami
             </p>
-            <GoTriangleDown className="w-4 h-7" />
-            {show && (
+            {/* <GoTriangleDown className="w-4 h-7" /> */}
+            {/* {show && (
               <motion.ul
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -114,7 +114,7 @@ const Footer = () => {
                   Accessories
                 </li>
               </motion.ul>
-            )}
+            )} */}
           </div>
           {/* />  */}
           <div className="w-full">

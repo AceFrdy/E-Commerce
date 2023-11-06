@@ -19,6 +19,16 @@ export const orebiSlice = createSlice({
         state.products.push(action.payload);
       }
     },
+    addToWishlist: (state, action) => {
+      const item = state.products.find(
+        (item) => item._id === action.payload._id
+      );
+      if (item) {
+        item.quantity += action.payload.quantity;
+      } else {
+        state.products.push(action.payload);
+      }
+    },
     increaseQuantity: (state, action) => {
       const item = state.products.find(
         (item) => item._id === action.payload._id
@@ -45,11 +55,23 @@ export const orebiSlice = createSlice({
     resetCart: (state) => {
       state.products = [];
     },
+    addToCompare: (state, action) => {
+      const item = state.products.find(
+        (item) => item._id === action.payload._id
+      );
+      if (item) {
+        item.quantity += action.payload.quantity;
+      } else {
+        state.products.push(action.payload);
+      }
+    },
   },
 });
 
 export const {
+  addToCompare,
   addToCart,
+  addToWishlist,
   increaseQuantity,
   drecreaseQuantity,
   deleteItem,

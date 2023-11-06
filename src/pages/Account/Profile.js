@@ -1,20 +1,10 @@
 import React from "react";
-// import Header from "../../components/home/Header/Header";
-// import Footer from "../../components/home/Footer/Footer";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import ProfileSideNav from "../../pages/Account/ProfileSideNav";
-// import ProfileData from "./pages/ProfileData";
-// import FooterBottom from "../../components/home/Footer/FooterBottom";
-// import { Route, Routes, NavLink, useLocation } from 'react-router-dom';
-// import ProfileData from "./pages/ProfileData"
-// import Alamat from "./pages/Alamat";
-// import AlamatEmpty from "./pages/AlamatEmpty";
 import ProfileData from "./pages/ProfileData";
 
 
 const Profile = () => {
-  // const userData = JSON.parse(localStorage.getItem('userData'));
-  // const location = useLocation();
   return (
     <div className="">
       {/* <Header /> */}

@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink, useLocation } from 'react-router-dom';
 
-
 function ProfileSideNav() {
   const location = useLocation();
   // const navigate = useNavigate();
