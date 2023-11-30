@@ -14,7 +14,7 @@ const ProductCategory = (props) => {
     const navigate = useNavigate();
     const productItem = props;
     const handleProductDetails = () => {
-        navigate(`/product/${rootId}`, {
+        navigate(`/category/${rootId}`, {
             state: {
                 item: productItem,
             },
@@ -23,7 +23,7 @@ const ProductCategory = (props) => {
     return (
         <div className="w-full relative group">
             <div className="max-w-80 max-h-80 relative overflow-y-hidden ">
-                <div >
+                <div onClick={handleProductDetails}>
                     <Image className="w-full h-full" imgSrc={props.img} onClick={handleProductDetails} />
                 </div>
             </div>

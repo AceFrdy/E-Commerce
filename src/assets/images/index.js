@@ -69,17 +69,19 @@ export {
   spfThree,
   spfFour,
 
-  // Year Product
-  productOfTheYear,
-  // ===================== Products End here ==============
-  paymentCard,
-  emptyCart,
-
   // Category
   Category1,
   Category2,
   Category3,
   Category4,
   Category5,
-  Category6
+  Category6,
+
+  // Year Product
+  productOfTheYear,
+  // ===================== Products End here ==============
+  paymentCard,
+  emptyCart
+
+
 };

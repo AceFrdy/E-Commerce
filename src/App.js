@@ -19,11 +19,19 @@ import Offer from "./pages/Offer/Offer";
 import Payment from "./pages/payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
+// import Category from "./components/home/Category/Cat/CatAcc";
 import Profile from "./pages/Account/Profile";
 import ProfileData from "./pages/Account/pages/ProfileData";
 import Alamat from "./pages/Account/pages/Alamat";
 import AlamatEmpty from "./pages/Account/pages/AlamatEmpty";
 import Pesanan from "./pages/Account/pages/Pesanan";
+import COD from "./pages/payment/page/COD";
+import Transfer from "./pages/payment/page/Transfer";
+import Qris from "./pages/payment/page/Qris";
+import ProductComparison from "./components/home/Products/component/ProductComparison";
+import { products } from "./components/home/Products/data/productsApi";
+import CatAcc from "./components/home/Category/Cat/CatAcc";
+
 
 const Layout = () => {
   return (
@@ -41,6 +49,9 @@ const Layout = () => {
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
+      {/* <Route path="/layout" element={<LayoutAd />}>
+        
+      </Route> */}
       <Route path="/" element={<Layout />}>
         {/* ==================== Header Navlink Start here =================== */}
         <Route index element={<Home />}></Route>
@@ -50,14 +61,22 @@ const router = createBrowserRouter(
         <Route path="/alamatisi" element={<AlamatEmpty />}></Route>
         <Route path="/profile" element={<Profile />}></Route>
         <Route path="/pesanan" element={<Pesanan />}></Route>
+        <Route path="/compare" element={<ProductComparison products={products} />}></Route>
+        
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
+        <Route path="/category/:_id" element={<CatAcc />}></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
+        <Route path="/cod" element={<COD />}></Route>
+        <Route path="/transfer" element={<Transfer />}></Route>
+        <Route path="/qris" element={<Qris />}></Route>
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
+      <Route path="/compare" element={<ProductComparison />}></Route>
+      {/* ==================== Admin Navlink here ===================== */}
     </Route>
   )
 );

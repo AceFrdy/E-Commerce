@@ -6,12 +6,16 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./redux/store";
 import "./index.css";
 import App from "./App";
+import { ThemeProvider } from "@material-tailwind/react";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
+      <ThemeProvider >
       <App />
+      </ThemeProvider>
     </PersistGate>
   </Provider>
 );
