@@ -43,8 +43,8 @@ const SignIn = () => {
       setPassword("");
     }
     const dummyData = {
-      email: 'frdy21st@gmail.com',
-      password: 'frdy1234',
+      email: 'user21@gmail.com',
+      password: 'user12345',
     };
     if (email === dummyData.email && password ===
       dummyData.password) {

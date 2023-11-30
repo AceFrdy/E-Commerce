@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Slider from "react-slick";
 import Heading from "../Products/Heading";
 import Product from "./ProductCategory";
 import SampleNextArrow from "./SampleNextArrow";
 import SamplePrevArrow from "./SamplePrevArrow";
+// import axios from "axios";
 // import { Link } from "react-router-dom";
 import {
   Category1,
@@ -13,9 +14,45 @@ import {
   Category5,
   Category6,
 } from "../../../assets/images/index";
+import Api from "../../../api"
 // import { CategoryData } from "../../../constants";
 
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+
+// ----------------------------------------------------------------------
+
+// const token = localStorage.getItem('accessToken') || '';
+
+
+
 const Category = () => {
+
+  const [category_content, setCategories] = useState([]);
+  // const [productData, setProductData] = useState([]);
+
+  const fetchCategory = async () => {
+      await Api.get('/web/category-contents')
+            .then((response) => {
+                //set data to state
+                setCategories(response.data.data.resource.data);
+                console.log("data : ",category_content);
+            });
+    }
+      // setCategories(response.data.data.resource.data);
+
+      // Tangkap data dari respons API dan simpan di state
+  
+  useEffect(() => {
+  
+    // Panggil fungsi untuk mengambil produk saat komponen dimuat
+    fetchCategory();
+  }, []);
+
+  useEffect(() => {
+    console.log("data: ", category_content);
+  }, [category_content]);
+  
   const categories = [
     {
       _id: "1",
@@ -71,7 +108,7 @@ const Category = () => {
       badge: true,
       des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
     },
-    // Add other categories here similarly
+    
   ];
 
   const settings = {
@@ -114,14 +151,14 @@ const Category = () => {
       <Heading heading="Category" />
       <div className="relative flex items-center w-full">
         <Slider {...settings} className="w-full h-full scroll whitespace-nowrap scroll-smooth">
-          {categories.map((category) => (
-            <div key={category._id} className="px-2 relative flex items-center w-[1440px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300">
+          {category_content.map((category) => (
+            <div key={category.id} className="px-2 relative flex items-center w-[1440px] inline-block p-2 cursor-pointer hover:scale-105 ease-in-out duration-300">
               {/* <Link to={`/category/${category._id}`}> */}
-                <Product
-                  _id={category._id}
-                  img={category.img}
-                  productName={category.productName}
-                />
+              <Product
+                _id= {category.id}
+                img= {category.category_photo}
+                productName={category.category_name}
+              />
               {/* </Link> */}
             </div>
           ))}

@@ -24,14 +24,20 @@ import Profile from "./pages/Account/Profile";
 import ProfileData from "./pages/Account/pages/ProfileData";
 import Alamat from "./pages/Account/pages/Alamat";
 import AlamatEmpty from "./pages/Account/pages/AlamatEmpty";
-import Pesanan from "./pages/Account/pages/Pesanan";
+import { Pesanan } from "./pages/Account/pages/Pesanan";
 import COD from "./pages/payment/page/COD";
 import Transfer from "./pages/payment/page/Transfer";
 import Qris from "./pages/payment/page/Qris";
 import ProductComparison from "./components/home/Products/component/ProductComparison";
 import { products } from "./components/home/Products/data/productsApi";
 import CatAcc from "./components/home/Category/Cat/CatAcc";
-
+import BelumBayar from "./pages/Account/pages/NavPesanan/BelumBayar";
+import Diambil from "./pages/Account/pages/NavPesanan/DiambilToko";
+import Dikemas from "./pages/Account/pages/NavPesanan/Dikemas";
+import Dikirim from "./pages/Account/pages/NavPesanan/Dikirim";
+import PesananSelesai from "./pages/Account/pages/NavPesanan/PesananSelesai";
+import { KonfirmTransfer } from "./pages/payment/page/KonfirmTransfer";
+import { WishlistItem } from "./pages/Wishlist/WishlistItem"; 
 
 const Layout = () => {
   return (
@@ -56,13 +62,10 @@ const router = createBrowserRouter(
         {/* ==================== Header Navlink Start here =================== */}
         <Route index element={<Home />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
-        <Route path="/profiledata" element={<ProfileData />}></Route>
-        <Route path="/alamat" element={<Alamat />}></Route>
-        <Route path="/alamatisi" element={<AlamatEmpty />}></Route>
-        <Route path="/profile" element={<Profile />}></Route>
-        <Route path="/pesanan" element={<Pesanan />}></Route>
+
         <Route path="/compare" element={<ProductComparison products={products} />}></Route>
-        
+
+        <Route path="/konfirmasitransfer" element={<KonfirmTransfer />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
         <Route path="/product/:_id" element={<ProductDetails />}></Route>
@@ -73,6 +76,17 @@ const router = createBrowserRouter(
         <Route path="/transfer" element={<Transfer />}></Route>
         <Route path="/qris" element={<Qris />}></Route>
       </Route>
+      <Route path="/profiledata" element={<ProfileData />}></Route>
+      <Route path="/belumBa" element={<BelumBayar />}></Route>
+      <Route path="/ambil" element={<Diambil />}></Route>
+      <Route path="/dikirim" element={<Dikirim />}></Route>
+      <Route path="/dikemas" element={<Dikemas />}></Route>
+      <Route path="/pesananselesai" element={<PesananSelesai />}></Route>
+      <Route path="/alamat" element={<Alamat />}></Route>
+      <Route path="/alamatisi" element={<AlamatEmpty />}></Route>
+      <Route path="/profile" element={<Profile />}></Route>
+      <Route path="/pesanan" element={<Pesanan />}></Route>
+      <Route path="/wishlistitem" element={<WishlistItem />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
       <Route path="/compare" element={<ProductComparison />}></Route>

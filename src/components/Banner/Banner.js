@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import {
@@ -7,9 +7,30 @@ import {
   bannerImgThree,
 } from "../../assets/images";
 import Image from "../designLayouts/Image";
+import Api from "../../api";
 
 const Banner = () => {
   const [dotActive, setDocActive] = useState(0);
+  const [banner_content, setBanner ] = useState([]);
+
+  const fetchBanner = async () => {
+    await Api.get('/web/heroes')
+          .then((response) => {
+              //set data to state
+              setBanner(response.data.data.resource.data);
+              console.log("data photo : ",response.data.data.resource.data[0].photos[0].photo);
+          });
+  }
+  useEffect(() => {
+  
+    // Panggil fungsi untuk mengambil produk saat komponen dimuat
+    fetchBanner();
+  }, []);
+
+  // useEffect(() => {
+  //   console.log("data: ", banner_content);
+  // }, [banner_content]);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -102,21 +123,18 @@ const Banner = () => {
   return (
     <div className="w-full bg-white">
       <Slider {...settings}>
-        <Link to="/offer">
-          <div>
-            <Image imgSrc={bannerImgOne} />
-          </div>
-        </Link>
-        <Link to="/offer">
-          <div>
-            <Image imgSrc={bannerImgTwo} />
-          </div>
-        </Link>
-        <Link to="/offer">
-          <div>
-            <Image imgSrc={bannerImgThree} />
-          </div>
-        </Link>
+        {banner_content.map((image) => (
+          <Link to="/offer" key={image.id}>
+            <div>
+              {image.photos.map((photo, index) =>(
+                <Image
+                key={index} 
+                _id={image.id}
+                imgSrc={photo.photo} />
+              ))}
+            </div>
+          </Link>
+        ))}
       </Slider>
     </div>
   );
