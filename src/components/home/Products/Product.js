@@ -12,7 +12,7 @@ import {
   DialogBody,
 } from "@material-tailwind/react";
 // import { products } from "../Products/data/Product";
-import ProductComparison from "./component/ProductComparison"
+import ProductComparison from "./component/ProductComparison.jsx"
 import WishlistIcon from "../../../pages/Wishlist/WishlistIcon";
 // import { paginationItems } from "../../../constants/index";
 

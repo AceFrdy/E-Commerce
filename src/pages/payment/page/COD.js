@@ -88,9 +88,9 @@ const COD = () => {
                     </div>
                             <div className="flex justify-center">
                                 {/* <Link to="/konfirmasitransfer"> */}
-                                    <button
+                                    <button 
                                         onClick={handleOpen}
-                                        className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300">
+                                        className="w-52 h-10 bg-primeColor rounded-lg text-white hover:bg-black duration-300">
                                         Proceed to Checkout
                                     </button>
                                 {/* </Link> */}

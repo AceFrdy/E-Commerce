@@ -139,7 +139,7 @@ const Payment = () => {
       <div className="pb-20">
         <p className="text-lg font-bold">Product Yang Dibeli</p>
 
-        <table className="mt-5 overflow-y-auto w-full max-h-80 mt-2 divide-y-2 divide-gray-400/25 rounded-lg h-full bg-[#F5F7F7] text-primeColor lgl:grid auto-rows-auto grid-row-1 grid-flow-row gap-4 px-6 text-lg font-titleFont font-semibold">
+        <table className="mt-5  mt-2 divide-y-2 divide-gray-400/25 rounded-lg h-full bg-[#F5F7F7] text-primeColor lgl:grid auto-rows-auto grid-row-1 grid-flow-row gap-4 px-6 text-lg font-titleFont font-semibold">
           <thead className="border-collapse border w-full">
             <tr className="border-b grid grid-cols-12">
               <th className="p-4 col-span-3">Image</th>
@@ -148,13 +148,12 @@ const Payment = () => {
               <th className="p-4 col-span-3">Sub Total</th>
             </tr>
           </thead>
-          <tbody >
-
-            {/* <div className="mt-5 overflow-y-auto max-h-80 mt-2 divide-y-2 divide-gray-400/25 rounded-lg h-full bg-[#F5F7F7] text-primeColor lgl:grid auto-rows-auto grid-row-1 grid-flow-row gap-4 px-6 text-lg font-titleFont font-semibold"> */}
+          <tbody className="overflow-y-auto w-full max-h-80" >
             {products.map((item) => (
-              <ItemCheck key={item._id} item={item} />
+              <div key={item._id}>
+                <ItemCheck item={item} />
+              </div>
             ))}
-            {/* </div> */}
           </tbody>
         </table>
 

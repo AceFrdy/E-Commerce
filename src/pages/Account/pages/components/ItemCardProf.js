@@ -7,7 +7,7 @@ export const ItemCardProf = ({ item }) => {
   const dispatch = useDispatch();
 
   return (
-    <tr className="border-b flex ml-2 mr-2 w-3/3 items-center text-lg font-semibold text-lg">
+    <tr className="border-b w-full flex mr-2 w-full items-center text-lg font-semibold text-lg">
       <td className="p-4">
         <img className="w-16 h-16" src={item.image} alt="productImage" />
       </td>

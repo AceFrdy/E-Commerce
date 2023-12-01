@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
-import { Dialog, DialogBody } from "@material-tailwind/react";
-// import Payment from '../Payment';
-// import BRI from "../../../assets/images/BRI.png"
-// import BCA from "../../../assets/images/BCA.png"
-// import BNI from "../../../assets/images/BNI.png"
 import { Konfirm } from "./Konfirm";
 import {
     Radio,
@@ -19,6 +9,8 @@ import {
     ListItem,
     ListItemPrefix,
     Typography,
+    Dialog, 
+    DialogBody,
 } from "@material-tailwind/react";
 
 export function Transfer() {
@@ -47,25 +39,6 @@ export function Transfer() {
             setPajak(20);
         }
     }, [totalAmt]);
-    // console.log(BCA, BRI, BNI);
-    // const bankList = [
-    //     {
-    //         id: 1,
-    //         name: "BRI Bank",
-    //         logo: "https://i0.wp.com/febi.uinsaid.ac.id/wp-content/uploads/2020/11/Logo-BRI-Bank-Rakyat-Indonesia-PNG-Terbaru.png?ssl=1",
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "BNI Bank",
-    //         logo: "https://upload.wikimedia.org/wikipedia/id/5/55/BNI_logo.svg",
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "BCA Bank",
-    //         logo: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg",
-    //     },
-    //     // Add more banks as needed
-    // ];
 
     return (
         <div className="flex flex-col space-y-4">
@@ -215,7 +188,7 @@ export function Transfer() {
                                 <Link to="/konfirmasitransfer">
                                     <button
                                         onClick={handleOpen}
-                                        className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300">
+                                        className="w-52 h-10 bg-primeColor rounded-lg text-white hover:bg-black duration-300">
                                         Proceed to Checkout
                                     </button>
                                 </Link>

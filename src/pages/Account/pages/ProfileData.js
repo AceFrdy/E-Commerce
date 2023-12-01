@@ -1,8 +1,6 @@
-// import { Card, CardBody } from "@material-tailwind/react";
 import React, { useState } from "react";
 
 const ProfileData = () => {
-  // const userData = JSON.parse(localStorage.getItem('userData'));
   const [username, setUsername] = useState("");
   const [jenisKelamin, setJenisKelamin] = useState("");
   const [noHandphone, setNoHandphone] = useState("");
@@ -18,8 +16,6 @@ const ProfileData = () => {
   }
   return (
     <div className="w-full lg:w-3/4 md:w-5/6 h-full flex flex-col md:gap-10">
-      {/* <Card className="w-full h-full">
-        <CardBody> */}
       <h1 className="text-xl font-semibold flex">Profile</h1>
       <div className="grid gap-4 grid-cols-2">
         <div className="w-full flex-col xl:flex-row flex items-center gap-4">
@@ -78,8 +74,6 @@ const ProfileData = () => {
           </button>
         </div>
       </div>
-      {/* </CardBody>
-      </Card> */}
     </div>
 
   );

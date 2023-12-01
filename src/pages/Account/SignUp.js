@@ -143,7 +143,7 @@ const SignUp = () => {
         setTimeout(() =>{
           console.log("Sign up successful!");
           navigate("/signin");
-        }, 2000);
+        }, 10000);
       }
     }
   };
@@ -259,7 +259,7 @@ const SignUp = () => {
                 {/* Email */}
                 <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
-                    Work Email
+                    Email
                   </p>
                   <input
                     onChange={handleEmail}
