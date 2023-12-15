@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 // import { NavLink, useLocation } from "react-router-dom";
-import ProfileSideNav from "../ProfileSideNav";
+import { ProfileSideNav } from "../ProfileSideNav";
 import Breadcrumbs from "../../../components/pageProps/Breadcrumbs";
+import { Card, CardBody, Select, Option, } from "@material-tailwind/react";
 // import { GoTriangleDown } from "react-icons/go";
 const AlamatEmpty = () => {
     const [username, setUsername] = useState("");
@@ -26,29 +27,55 @@ const AlamatEmpty = () => {
     const handleAlamat = (e) => {
         setAlamat(e.target.value);
     }
-    const handleNegara = (e) => {
-        setNegara(e.target.value);
-    }
+    const handleSimpan = () => {
+        // Simulasi penyimpanan data
+        const data = {
+            username,
+            kota,
+            noHandphone,
+            kode,
+            alamat,
+            negara,
+        };
+        console.log('Data disimpan:', data);
+        alert('Data tersimpan!');
+    };
+    const handleBatal = () => {
+        // Simulasi pengambilan data
+        const dummyData = {
+            username: 'John Doe',
+            kota: 'Jakarta',
+            noHandphone: '08123456789',
+            kode: '12345',
+            alamat: 'Jalan Contoh No. 123',
+            negara: 'Indonesia',
+        };
+        // Set nilai ke state dengan data dummy
+        setUsername(dummyData.username);
+        setKota(dummyData.kota);
+        setNoHandphone(dummyData.noHandphone);
+        setKode(dummyData.kode);
+        setAlamat(dummyData.alamat);
+        setNegara(dummyData.negara);
+        alert('Data batal diubah!');
+    };
+    // const handleNegara = (e) => {
+    //     setNegara(e.target.value);
+    // }
     // const location = useLocation();
     return (
         <div>
-            <div>
+            <div className="overflow-hidden h-screen w-screen">
                 <div className="max-w-container mx-auto px-4">
-                    <Breadcrumbs title="Profile" />
                     {/* ================= Products Start here =================== */}
                 </div>
-                <div className="w-full h-full flex pb-20 gap-10">
-                    <div className="w-[20%] lgl:w-[25%] hidden mdl:inline-flex h-full">
-                        <div className="flex flex-col space-y-4">
-                            <ProfileSideNav />
-                        </div>
-                    </div>
-                    <div className="w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-10">
-                        <h1 className="text-xl font-semibold flex">Alamat</h1>
+                {/* <Card className="w-full">
+                    <CardBody> */}
+                        <h1 className="text-xl font-semibold mb-10 flex">Alamat</h1>
                         {/* <div className="grid gap-2 grid-cols-2"> */}
-                        <div className="w-full flex-col xl:flex-row flex items-center grid grid-cols-2 gap-4">
-                            <div className="flex flex-col w-[65%]">
-                                <p className="text-lg font-bodyFont font-semibold">Nama</p>
+                        <div className="w-full flex-col xl:flex-row flex items-center grid grid-cols-2 gap-1">
+                            <div className="flex flex-col w-[70%]">
+                                <p className="text-sm font-bodyFont font-semibold">Nama</p>
                                 <input
                                     onChange={handleUsername}
                                     value={username}
@@ -57,8 +84,8 @@ const AlamatEmpty = () => {
                                     placeholder="Masukan Nama ...*"
                                 />
                             </div>
-                            <div className="flex flex-col w-[65%]">
-                                <p className="text-lg font-bodyFont font-semibold">No Handphone</p>
+                            <div className="flex flex-col w-[70%]">
+                                <p className="text-sm font-bodyFont font-semibold">No Handphone</p>
                                 <input
                                     onChange={handlenoHandphone}
                                     value={noHandphone}
@@ -67,20 +94,20 @@ const AlamatEmpty = () => {
                                     placeholder="099872131 ...*"
                                 />
                             </div>
-                            <div className="flex-col w-full pb-4 col-span-2">
-                                <p className="text-lg font-bodyFont font-semibold">Alamat</p>
+                            <div className="flex-col mt-4 w-full pb-4 col-span-2">
+                                <p className="text-sm font-bodyFont font-semibold">Alamat</p>
                                 <label className="block">
                                     <span className="text-gray-700"></span>
                                     <textarea
                                         onChange={handleAlamat}
                                         value={alamat}
-                                        className="mt-1 lgl:grid grid-rows-2 grid-cols-2 grid-flow-col gap-2 px-2 block w-[83%] h-24 border-400 bg-white px-4 text-primeColor text-lg placeholder:text-base outline-black"
+                                        className="mt-1 lgl:grid grid-rows-1 grid-cols-1 grid-flow-col gap-2 px-2 block w-[83%] h-24 border-400 bg-white px-4 text-primeColor text-lg placeholder:text-base outline-black"
                                         type="text"
                                         placeholder="Tuliskan Alamat Anda ... " rows="3"></textarea>
                                 </label>
                             </div>
-                            <div className="flex flex-col w-[65%]">
-                                <p className="text-lg font-bodyFont font-semibold">Kota</p>
+                            <div className="flex flex-col w-[70%]">
+                                <p className="text-sm font-bodyFont font-semibold">Kota</p>
                                 <input
                                     onChange={handleKota}
                                     value={kota}
@@ -89,58 +116,51 @@ const AlamatEmpty = () => {
                                     placeholder="Bantul ...*"
                                 />
                             </div>
-                            <div className="flex flex-col w-[65%]">
-                                <p className="text-lg font-bodyFont font-semibold">Kode Pos</p>
+                            <div className="flex flex-col w-[70%]">
+                                <p className="text-sm font-bodyFont font-semibold">Kode Pos</p>
                                 <input
                                     onChange={handleKode}
                                     value={kode}
                                     className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
                                     type="text"
-                                    placeholder="44634"
+                                    placeholder="kode"
                                 />
                             </div>
-                            <div className="flex flex-col w-full">
-                                <div className=" gap-2 text-base relative">
-                                    <p className="text-lg font-bodyFont font-semibold">Negara</p>
-                                    <select
-                                        onChange={handleNegara}
-                                        value={negara}
-                                        className="mt-2 w-32 md:w-52 border-[1px] border-gray-200 py-1 px-4 cursor-pointer text-primeColor text-base block dark:placeholder-gray-400 appearance-none focus-within:outline-none focus-visible:border-primeColor"
+                            <div className="flex mt-4 flex-col w-full">
+                                <div className="w-72">
+                                    <Select
+                                        label="Pilih Negara"
+                                        animate={{
+                                            mount: { y: 0 },
+                                            unmount: { y: 25 },
+                                        }}
                                     >
-                                        <option >Pilih Negara</option>
-                                        <option >Indonesia</option>
-                                        <option >Malaysia</option>
-                                        <option >Singapura</option>
-                                        <option >Australia</option>
-                                    </select>
-                                    {/* <span className="text-sm right-2 md:right-4 top-2.5"> */}
-                                        {/* <GoTriangleDown /> */}
-                                    {/* </span> */}
+                                        <Option>Indonesia</Option>
+                                        <Option>Singapura</Option>
+                                        <Option>Malaysia</Option>
+                                        <Option>Australia</Option>
+                                        <Option>Philipines</Option>
+                                    </Select>
                                 </div>
                             </div>
                         </div>
                         <div className="pt-4 relative flex grid grid-cols-7 gap-1">
                             {/* <NavLink> */}
-                            
-                                <button
-                                    onClick={() => alert('Terhapus')}
-                                    className="rounded-md flex-none w- bg-white text-lightText w-[100%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
-                                >
-                                    Simpan
-                                </button>
-                            {/* </NavLink> */}
-                            
-                                <button
-                                    onClick={() => alert('Terhapus')}
-                                    className="rounded-md bg-white text-lightText w-[100%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
-                                >
-                                    Batal
-                                </button>
-                            
+                            <button
+                                onClick={handleSimpan}
+                                className="rounded-md flex-none w- bg-white text-lightText w-[100%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
+                            >
+                                Simpan
+                            </button>
+                            <button
+                                onClick={handleBatal}
+                                className="rounded-md bg-white text-lightText w-[100%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
+                            >
+                                Batal
+                            </button>
                         </div>
-                        {/* </div> */}
-                    </div>
-                </div>
+                    {/* </CardBody>
+                </Card> */}
             </div>
         </div>
     )

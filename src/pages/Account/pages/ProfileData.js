@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-
 const ProfileData = () => {
-  // const userData = JSON.parse(localStorage.getItem('userData'));
   const [username, setUsername] = useState("");
   const [jenisKelamin, setJenisKelamin] = useState("");
   const [noHandphone, setNoHandphone] = useState("");
@@ -17,7 +15,7 @@ const ProfileData = () => {
     setNoHandphone(e.target.value);
   }
   return (
-    <div className="w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-10">
+    <div className="w-full lg:w-3/4 md:w-5/6 h-full flex flex-col md:gap-10">
       <h1 className="text-xl font-semibold flex">Profile</h1>
       <div className="grid gap-4 grid-cols-2">
         <div className="w-full flex-col xl:flex-row flex items-center gap-4">

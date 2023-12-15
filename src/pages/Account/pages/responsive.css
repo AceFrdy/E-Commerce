@@ -1,0 +1,29 @@
+/* Dalam NamaFile.css */
+.container {
+    /* Gaya umum */
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container {
+      /* Gaya untuk tampilan tablet */
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .container {
+      /* Gaya untuk tampilan mobile */
+    }
+  }
+  /* Dalam NamaFile.css */
+.container {
+  /* Gaya umum */
+}
+
+.sidebar-open {
+  /* Gaya untuk menampilkan sidebar */
+}
+
+.sidebar-closed {
+  /* Gaya untuk menyembunyikan sidebar */
+  display: none;
+}

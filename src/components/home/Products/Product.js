@@ -1,5 +1,4 @@
-import React from "react";
-import { BsSuitHeartFill } from "react-icons/bs";
+import React, { useState } from "react";
 import { GiReturnArrow } from "react-icons/gi";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdOutlineLabelImportant } from "react-icons/md";
@@ -7,20 +6,18 @@ import Image from "../../designLayouts/Image";
 import Badge from "./Badge";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart, } from "../../../redux/orebiSlice";
+import { addToCart, addToWishlist, } from "../../../redux/orebiSlice";
 import {
   Dialog,
   DialogBody,
 } from "@material-tailwind/react";
 // import { products } from "../Products/data/Product";
-import ProductComparison from "./component/ProductComparison"
+import ProductComparison from "./component/ProductComparison.jsx"
 import WishlistIcon from "../../../pages/Wishlist/WishlistIcon";
+// import { paginationItems } from "../../../constants/index";
 
 const Product = (props) => {
-
-  // const { data: products, isLoading, isError } = useFetchAllProductsQuery() || {};
-
-  // const categories = ["Laptops", "Handphones", "HeadPhone", "Accessories"];
+  // const [productDat
   const [open, setOpen] = React.useState(false);
 
   // const handleCategoryChange = (event) => {
@@ -44,15 +41,23 @@ const Product = (props) => {
       },
     });
   };
-  // // const handleProductCompare = () => {
-  // //   navigate(`/compare/${rootId}`, {
-  // //     state: {
-  // //       item: productItem,
-  // //     },
-  // //   });
-  // };
-  return (
 
+  const [addedToWishlist, setAddedToWishlist] = useState(false);
+  const handleAddToWishlist = () => {
+    dispatch(
+      addToWishlist({
+        _id: props._id,
+        name: props.productName,
+        quantity: 1,
+        image: props.img,
+        badge: props.badge,
+        price: props.price,
+        colors: props.color,
+      })
+    );
+    setAddedToWishlist(true); // Set addedToWishlist to true when added
+  };
+  return (
     <div >
       <Dialog className="w-full h-[90%] rounded-lg overflow-auto touch-auto" open={open} size="xl" handler={handleOpen}>
         <DialogBody>
@@ -60,7 +65,6 @@ const Product = (props) => {
         </DialogBody>
       </Dialog>
       <div className="w-full relative group">
-
         <div className="max-w-80 max-h-80 relative overflow-y-hidden ">
           <div onClick={handleProductDetails}>
             <Image className="w-full h-full" imgSrc={props.img} />
@@ -76,7 +80,6 @@ const Product = (props) => {
                   <GiReturnArrow />
                 </span>
               </li>
-
               <li
                 onClick={handleProductDetails}
                 className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
@@ -88,9 +91,17 @@ const Product = (props) => {
               </li>
               <li className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full">
                 Add to Wish List
-                <span>
-                  <WishlistIcon />
-                </span>
+                {!addedToWishlist ? ( // Condition to check if not added to wishlist
+                  <span>
+                    <WishlistIcon
+                      onClick={handleAddToWishlist} // Handle click to add to wishlist
+                      className="absolute left-auto right-3 text-[#767676] hover:text-primeColor hover:border-b-primeColor items-center justify-end gap-1 hover:cursor-pointer pb-1 duration-300 w-8 h-8"
+                    />
+                  </span>
+                ) : (
+                  // Show a message or icon indicating it's added to wishlist
+                  <span>Added to Wishlist</span>
+                )}
               </li>
             </ul>
           </div>
@@ -100,7 +111,6 @@ const Product = (props) => {
             <p className="text-[#767676] text-[14px]">${props.price}</p>
             <h2 className="flex text-lg text-primeColor font-bold">
               {props.productName}
-
               <FaShoppingCart
                 onClick={() =>
                   dispatch(

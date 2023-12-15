@@ -1,8 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
+// import { combineReducers } from "@reduxjs/toolkit";
+// import cartReducer from "./cartSlice";
+// import { addToWishlist } from "./wishSlice";
+
+// const rootReducer = combineReducers({
+//   cart: cartReducer,
+//   wishlist: wishlistReducer,
+// });
 
 const initialState = {
   userInfo: [],
   products: [],
+  
 };
 
 export const orebiSlice = createSlice({
@@ -20,13 +29,13 @@ export const orebiSlice = createSlice({
       }
     },
     addToWishlist: (state, action) => {
-      const item = state.products.find(
+      const item = state.productsWishlist.find(
         (item) => item._id === action.payload._id
       );
       if (item) {
         item.quantity += action.payload.quantity;
       } else {
-        state.products.push(action.payload);
+        state.productsWishlist.push(action.payload);
       }
     },
     increaseQuantity: (state, action) => {
@@ -78,3 +87,4 @@ export const {
   resetCart,
 } = orebiSlice.actions;
 export default orebiSlice.reducer;
+// export rootReducer
