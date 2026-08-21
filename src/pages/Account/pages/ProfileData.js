@@ -1,81 +1,71 @@
 import React, { useState } from "react";
 
 const ProfileData = () => {
-  const [username, setUsername] = useState("");
-  const [jenisKelamin, setJenisKelamin] = useState("");
-  const [noHandphone, setNoHandphone] = useState("");
+  const [username, setUsername] = useState("John Doe");
+  const [jenisKelamin, setJenisKelamin] = useState("Laki-laki");
+  const [noHandphone, setNoHandphone] = useState("08123456789");
+  const [email] = useState("john.doe@example.com");
 
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
-  }
-  const handleJenisKelamin = (e) => {
-    setJenisKelamin(e.taget.value);
-  }
-  const handlenoHandphone = (e) => {
-    setNoHandphone(e.target.value);
-  }
+  const handleSimpan = () => {
+    alert("Data profil berhasil diperbarui!");
+  };
+
   return (
-    <div className="w-full lg:w-3/4 md:w-5/6 h-full flex flex-col md:gap-10">
-      <h1 className="text-xl font-semibold flex">Profile</h1>
-      <div className="grid gap-4 grid-cols-2">
-        <div className="w-full flex-col xl:flex-row flex items-center gap-4">
-          <div className="flex flex-col w-full">
-            <p className="text-lg font-bodyFont font-semibold mb-6">Nama</p>
-            <input
-              onChange={handleUsername}
-              value={username}
-              className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
-              type="text"
-              placeholder="Masukan Nama ...*"
-            />
-          </div>
+    <div className="w-full">
+      <h1 className="text-xl font-bold font-titleFont text-primeColor mb-6 pb-2 border-b border-gray-100">
+        Informasi Profil
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="flex flex-col">
+          <label className="text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
+          <input
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
+            className="w-full h-11 border border-gray-300 rounded-lg px-4 text-primeColor text-sm outline-none focus:border-primeColor"
+            type="text"
+            placeholder="Masukkan Nama Lengkap"
+          />
         </div>
-        <div>
-          <div className="flex flex-col w-full">
-            <p className="text-lg font-bodyFont font-semibold mb-6">Jenis Kelamin</p>
-            <input
-              onChange={handleJenisKelamin}
-              value={jenisKelamin}
-              className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
-              type="text"
-              placeholder="Jenis Kelamin ...*"
-            />
-          </div>
-        </div>
-        <div>
-          <div className="flex flex-col w-full">
-            <p className="text-lg font-bodyFont font-semibold mb-6">No.Handphone</p>
-            <input
-              onChange={handlenoHandphone}
-              value={noHandphone}
-              className="w-full h-12 border-b border-gray-400 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
-              type="text"
-              placeholder="087654321*"
-            />
-          </div>
-        </div>
-        <div>
-          <div className="flex flex-col w-full">
-            <p className="text-lg font-bodyFont font-semibold mb-6">Email</p>
-            <text
-              className="w-full h-12 bg-transparent px-4 text-primeColor text-lg placeholder:text-base outline-none"
-              type="text"
-            >
-              user123@gmail.com
-            </text >
-          </div>
-        </div>
-        <div>
-          <button
-            onClick={() => alert('Tersimpan')}
-            className="rounded-md bg-primeColor cursor-pointer hover:bg-black active:bg-gray-900 px-2.5 py-2.5 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300"
+        <div className="flex flex-col">
+          <label className="text-sm font-semibold text-gray-700 mb-2">Jenis Kelamin</label>
+          <select
+            onChange={(e) => setJenisKelamin(e.target.value)}
+            value={jenisKelamin}
+            className="w-full h-11 border border-gray-300 rounded-lg px-4 text-primeColor text-sm outline-none focus:border-primeColor bg-white"
           >
-            Simpan
-          </button>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+          </select>
+        </div>
+        <div className="flex flex-col">
+          <label className="text-sm font-semibold text-gray-700 mb-2">No. Handphone</label>
+          <input
+            onChange={(e) => setNoHandphone(e.target.value)}
+            value={noHandphone}
+            className="w-full h-11 border border-gray-300 rounded-lg px-4 text-primeColor text-sm outline-none focus:border-primeColor"
+            type="text"
+            placeholder="Masukkan No. Handphone"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="text-sm font-semibold text-gray-700 mb-2">Email</label>
+          <input
+            disabled
+            value={email}
+            className="w-full h-11 border border-gray-200 bg-gray-100 rounded-lg px-4 text-gray-500 text-sm outline-none cursor-not-allowed"
+            type="email"
+          />
         </div>
       </div>
+      <div className="mt-8 pt-4 border-t border-gray-100 flex justify-end">
+        <button
+          onClick={handleSimpan}
+          className="px-6 py-2.5 bg-primeColor hover:bg-black text-white text-sm font-semibold rounded-lg transition-colors duration-300 shadow"
+        >
+          Simpan Perubahan
+        </button>
+      </div>
     </div>
-
   );
 };
 

@@ -1,56 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteItem } from '../../../src/redux/orebiSlice';
-import { Link } from 'react-router-dom';
-import { Card, CardHeader, CardBody, CardFooter, Typography, Button } from '@material-tailwind/react';
+import { deleteItem, addToCart } from '../../redux/orebiSlice';
+import { FaShoppingCart, FaTrash, FaCheck } from 'react-icons/fa';
 
-export const Wishlist = ({ item }) => {
+export const Wishlist = ({ item, onDelete }) => {
   const dispatch = useDispatch();
+  const [added, setAdded] = useState(false);
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        _id: item._id,
+        name: item.name || item.productName,
+        quantity: 1,
+        image: item.image || item.img,
+        badge: item.badge,
+        price: item.price,
+        colors: item.color || item.colors,
+      })
+    );
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(item._id);
+    } else {
+      dispatch(deleteItem(item._id));
+    }
+  };
+
   return (
-    <Card className="w-48">
-      <CardHeader shadow={false} floated={false} className="h-40">
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full">
+      <div className="w-full h-44 bg-[#F5F5F3] p-3 flex items-center justify-center relative overflow-hidden group">
         <img
-          src={item.image}
-          alt="productImage"
-          className="h-full w-full object-cover"
+          src={item.image || item.img}
+          alt={item.name || item.productName}
+          className="h-full object-contain group-hover:scale-105 transition-transform duration-300"
         />
-      </CardHeader>
-      <CardBody>
-        <div className="mb-2 flex items-center justify-between">
-          <Typography color="blue-gray" className="font-medium">
-            {item.name}
-          </Typography>
-          <Typography color="blue-gray" className="font-medium">
+      </div>
+      <div className="p-4 flex flex-col flex-grow justify-between gap-3">
+        <div>
+          <h3 className="font-bold text-sm text-primeColor font-titleFont line-clamp-1 mb-1">
+            {item.name || item.productName}
+          </h3>
+          <p className="text-xs text-gray-500 mb-1">
+            Warna: {item.colors || item.color || "Mixed"}
+          </p>
+          <p className="text-base font-extrabold text-primeColor">
             ${item.price}
-          </Typography>
+          </p>
         </div>
-        <Typography
-          variant="small"
-          color="gray"
-          className="font-normal opacity-75"
-        >
-          Warna Ireng
-        </Typography>
-      </CardBody>
-      <CardFooter className="pt-0">
-        <Button
-          ripple={false}
-          fullWidth={true}
-          className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-        >
-          Add to Cart
-        </Button>
-        <div className="relative flex items-center">
-          <Button
-            onClick={() => dispatch(deleteItem(item._id))}
-            ripple={false}
-            fullWidth={true}
-            className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+
+        <div className="flex flex-col gap-2 pt-2 border-t border-gray-100">
+          <button
+            onClick={handleAddToCart}
+            className="w-full py-2 bg-primeColor hover:bg-black text-white text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-colors"
           >
+            {added ? <FaCheck /> : <FaShoppingCart />}
+            {added ? "Ditambahkan" : "Add to Cart"}
+          </button>
+          <button
+            onClick={handleDelete}
+            className="w-full py-1.5 border border-red-200 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg flex items-center justify-center gap-1 transition-colors"
+          >
+            <FaTrash className="text-xs" />
             Hapus
-          </Button>
+          </button>
         </div>
-      </CardFooter>
-    </Card>
+      </div>
+    </div>
   );
 };

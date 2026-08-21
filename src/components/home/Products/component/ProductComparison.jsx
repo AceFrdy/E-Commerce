@@ -1,197 +1,287 @@
 import React, { useState, useEffect } from "react";
-import Api from "../../../../api";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../../redux/orebiSlice";
+import { paginationItems } from "../../../../constants";
+import { FaShoppingCart, FaCheck } from "react-icons/fa";
+import { GoTriangleDown } from "react-icons/go";
+
 const ProductComparison = () => {
-  const { data: products } = {};
+  const dispatch = useDispatch();
+  const products = paginationItems;
 
-  // select the selected product
-  const [selectedProduct1, setSelectedProduct1] = useState("");
-  const [selectedProduct2, setSelectedProduct2] = useState("");
+  const [selectedProduct1, setSelectedProduct1] = useState(
+    products[0]?._id ? String(products[0]._id) : ""
+  );
+  const [selectedProduct2, setSelectedProduct2] = useState(
+    products[3]?._id ? String(products[3]._id) : ""
+  );
 
-  // set state for selected Product info from api
-  const [selectedProductInfo1, setSelectedProductInfo1] = useState({});
-  const [selectedProductInfo2, setSelectedProductInfo2] = useState({});
-
-  // useEffect to get the selected product info from api
+  const [product1, setProduct1] = useState(products[0] || null);
+  const [product2, setProduct2] = useState(products[3] || null);
+  const [addedCart1, setAddedCart1] = useState(false);
+  const [addedCart2, setAddedCart2] = useState(false);
 
   useEffect(() => {
     if (selectedProduct1) {
-      const fetchData1 = async (selectedProduct1) => {
-        const res = await Api.get(`/web/contents/${selectedProduct1}`);
-        const data1 = res?.data;
-        setSelectedProductInfo1(data1);
-      };
-
-      fetchData1(selectedProduct1);
+      const found = products.find(
+        (item) => String(item._id) === String(selectedProduct1)
+      );
+      if (found) setProduct1(found);
     }
+  }, [selectedProduct1, products]);
 
+  useEffect(() => {
     if (selectedProduct2) {
-      const fetchData2 = async (selectedProduct2) => {
-        const res = await Api.get(`web/contents/${selectedProduct2}`);
-        const data2 = res?.data;
-        setSelectedProductInfo2(data2);
-      };
-
-      fetchData2(selectedProduct2);
+      const found = products.find(
+        (item) => String(item._id) === String(selectedProduct2)
+      );
+      if (found) setProduct2(found);
     }
-  }, [selectedProduct1, selectedProduct2]);
+  }, [selectedProduct2, products]);
 
-  console.log(selectedProductInfo1);
+  const handleAddToCart = (prod, setAddedState) => {
+    if (!prod) return;
+    dispatch(
+      addToCart({
+        _id: prod._id,
+        name: prod.productName,
+        quantity: 1,
+        image: prod.img,
+        badge: prod.badge,
+        price: prod.price,
+        colors: prod.color,
+      })
+    );
+    setAddedState(true);
+    setTimeout(() => setAddedState(false), 2000);
+  };
+
   return (
-    <>
-      <div class="overflow-x-auto mt-10">
-        <div className="bg-green-100 mx-auto py-2 px-2 rounded-sm shadow-sm flex justify-between">
-          <div class="relative">
+    <div className="w-full max-w-5xl mx-auto py-6 px-4 font-bodyFont">
+      {/* Title & Header Bar */}
+      <div className="bg-primeColor text-white py-4 px-6 rounded-t-xl flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <h2 className="text-xl md:text-2xl font-bold font-titleFont">
+            Product Comparison
+          </h2>
+          <p className="text-xs md:text-sm text-gray-300">
+            Compare details & specifications side-by-side
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+          {/* Select 1 */}
+          <div className="relative flex-1 sm:flex-initial">
             <select
               value={selectedProduct1}
               onChange={(e) => setSelectedProduct1(e.target.value)}
-              class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full sm:w-56 bg-white text-primeColor text-sm font-semibold py-2 px-3 pr-8 rounded-lg appearance-none cursor-pointer focus:outline-none shadow-sm border border-gray-300"
             >
-              <option>--- Select a Category 1 ---</option>
-              {products?.length > 0 &&
-                products
-                  ?.filter((item) => item?._id !== selectedProduct2)
-                  .map((product) => {
-                    return (
-                      <option value={product?._id} key={product?.id}>
-                        {product?.title}
-                      </option>
-                    );
-                  })}
+              <option value="">Select Product 1</option>
+              {products
+                .filter((item) => String(item._id) !== String(selectedProduct2))
+                .map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.productName}
+                  </option>
+                ))}
             </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg
-                class="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M9.29289 12.2929C9.68342 12.6834 10.3166 12.6834 10.7071 12.2929L14.7071 8.29289C15.0976 7.90237 15.0976 7.2692 14.7071 6.87868C14.3166 6.48815 13.6834 6.48815 13.2929 6.87868L10 10.1716L6.70711 6.87868C6.31658 6.48815 5.68342 6.48815 5.29289 6.87868C4.90237 7.2692 4.90237 7.90237 5.29289 8.29289L9.29289 12.2929Z" />
-              </svg>
-            </div>
+            <GoTriangleDown className="absolute right-2.5 top-3 text-gray-600 pointer-events-none text-xs" />
           </div>
 
-          <div className="mx-auto my-auto text-center">Compare Our Products</div>
-
-
-          <div class="relative">
+          {/* Select 2 */}
+          <div className="relative flex-1 sm:flex-initial">
             <select
               value={selectedProduct2}
               onChange={(e) => setSelectedProduct2(e.target.value)}
-              class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full sm:w-56 bg-white text-primeColor text-sm font-semibold py-2 px-3 pr-8 rounded-lg appearance-none cursor-pointer focus:outline-none shadow-sm border border-gray-300"
             >
-              <option>--- Select a Product 2 ---</option>
-              {products?.length > 0 &&
-                products
-                  ?.filter((item) => item?._id !== selectedProduct1)
-                  .map((product) => {
-                    return (
-                      <option value={product?._id} key={product?.id}>
-                        {product?.title}
-                      </option>
-                    );
-                  })}
+              <option value="">Select Product 2</option>
+              {products
+                .filter((item) => String(item._id) !== String(selectedProduct1))
+                .map((item) => (
+                  <option key={item._id} value={item._id}>
+                    {item.productName}
+                  </option>
+                ))}
             </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg
-                class="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
+            <GoTriangleDown className="absolute right-2.5 top-3 text-gray-600 pointer-events-none text-xs" />
+          </div>
+        </div>
+      </div>
+
+      {/* Main Cards Area */}
+      <div className="bg-white border border-t-0 border-gray-200 rounded-b-xl shadow-md p-6">
+        <div className="grid grid-cols-1 md:grid-cols-11 gap-4 items-center mb-8">
+          {/* Product 1 Card */}
+          <div className="md:col-span-5 bg-[#F5F5F3] p-4 rounded-xl border border-gray-200 flex flex-col items-center text-center group">
+            <div className="w-full h-56 flex items-center justify-center overflow-hidden rounded-lg bg-white mb-4 p-2 shadow-inner">
+              {product1?.img ? (
+                <img
+                  src={product1.img}
+                  alt={product1.productName}
+                  className="h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <span className="text-gray-400 text-sm">No Image</span>
+              )}
+            </div>
+            <span className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-1">
+              {product1?.category || "Product 1"}
+            </span>
+            <h3 className="text-lg font-bold text-primeColor font-titleFont mb-1">
+              {product1?.productName || "Select a Product"}
+            </h3>
+            <p className="text-xl font-extrabold text-primeColor mb-4">
+              {product1?.price ? `$${product1.price}` : "-"}
+            </p>
+            {product1 && (
+              <button
+                onClick={() => handleAddToCart(product1, setAddedCart1)}
+                className="w-full py-2.5 px-4 bg-primeColor text-white text-sm font-semibold rounded-lg hover:bg-black transition-colors duration-300 flex items-center justify-center gap-2"
               >
-                <path d="M9.29289 12.2929C9.68342 12.6834 10.3166 12.6834 10.7071 12.2929L14.7071 8.29289C15.0976 7.90237 15.0976 7.2692 14.7071 6.87868C14.3166 6.48815 13.6834 6.48815 13.2929 6.87868L10 10.1716L6.70711 6.87868C6.31658 6.48815 5.68342 6.48815 5.29289 6.87868C4.90237 7.2692 4.90237 7.90237 5.29289 8.29289L9.29289 12.2929Z" />
-              </svg>
+                {addedCart1 ? <FaCheck /> : <FaShoppingCart />}
+                {addedCart1 ? "Added to Cart" : "Add to Cart"}
+              </button>
+            )}
+          </div>
+
+          {/* VS Divider */}
+          <div className="md:col-span-1 flex justify-center items-center py-2">
+            <div className="w-12 h-12 rounded-full bg-primeColor text-white font-extrabold flex items-center justify-center text-lg shadow-lg border-2 border-white">
+              VS
             </div>
           </div>
+
+          {/* Product 2 Card */}
+          <div className="md:col-span-5 bg-[#F5F5F3] p-4 rounded-xl border border-gray-200 flex flex-col items-center text-center group">
+            <div className="w-full h-56 flex items-center justify-center overflow-hidden rounded-lg bg-white mb-4 p-2 shadow-inner">
+              {product2?.img ? (
+                <img
+                  src={product2.img}
+                  alt={product2.productName}
+                  className="h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <span className="text-gray-400 text-sm">No Image</span>
+              )}
+            </div>
+            <span className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-1">
+              {product2?.category || "Product 2"}
+            </span>
+            <h3 className="text-lg font-bold text-primeColor font-titleFont mb-1">
+              {product2?.productName || "Select a Product"}
+            </h3>
+            <p className="text-xl font-extrabold text-primeColor mb-4">
+              {product2?.price ? `$${product2.price}` : "-"}
+            </p>
+            {product2 && (
+              <button
+                onClick={() => handleAddToCart(product2, setAddedCart2)}
+                className="w-full py-2.5 px-4 bg-primeColor text-white text-sm font-semibold rounded-lg hover:bg-black transition-colors duration-300 flex items-center justify-center gap-2"
+              >
+                {addedCart2 ? <FaCheck /> : <FaShoppingCart />}
+                {addedCart2 ? "Added to Cart" : "Add to Cart"}
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className="container mt-4 py-4 mx-auto grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-8">
-          <div className="left-image mx-auto sm:col-span-1">
-            <button>
-              <img
-                src={
-                  selectedProductInfo1?.image
-                    ? selectedProductInfo1?.image
-                    : "https://img.freepik.com/free-photo/empty-glowing-screen-with-person-holding-mobile-phone_53876-96220.jpg?w=996&t=st=1677775557~exp=1677776157~hmac=af1c441a5e339ab8385fd5128a8b7c01671c6b1cf1d22563a059d1b9d2ac331c"
-                }
-                alt=""
-                className="h-[300px] w-full object-cover"
-              />
-            </button>
-          </div>
-          <div className="mx-auto my-auto text-center sm:col-span-1">
-            <h2 className="font-bold text-4xl py-5">VS</h2>
-          </div>
-          <div className="right-image mx-auto sm:col-span-1">
-            <button>
-              <img
-                src={
-                  selectedProductInfo2?.image
-                    ? selectedProductInfo2?.image
-                    : "https://img.freepik.com/free-photo/empty-glowing-screen-with-person-holding-mobile-phone_53876-96220.jpg?w=996&t=st=1677775557~exp=1677776157~hmac=af1c441a5e339ab8385fd5128a8b7c01671c6b1cf1d22563a059d1b9d2ac331c"
-                }
-                alt=""
-                className="h-[300px] w-full object-cover"
-              />
-            </button>
-          </div>
-        </div>
+        {/* Detailed Specs Table */}
+        <div className="overflow-x-auto border border-gray-200 rounded-lg">
+          <table className="w-full text-left text-sm border-collapse">
+            <thead>
+              <tr className="bg-gray-100 text-primeColor font-titleFont border-b border-gray-200">
+                <th className="py-3 px-4 font-bold w-1/4">Specification</th>
+                <th className="py-3 px-4 font-bold w-3/8">
+                  {product1?.productName || "Product 1"}
+                </th>
+                <th className="py-3 px-4 font-bold w-3/8">
+                  {product2?.productName || "Product 2"}
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {/* Price */}
+              <tr>
+                <td className="py-3 px-4 font-semibold text-gray-600 bg-gray-50">
+                  Price
+                </td>
+                <td className="py-3 px-4 font-bold text-primeColor">
+                  {product1?.price ? `$${product1.price}` : "-"}
+                </td>
+                <td className="py-3 px-4 font-bold text-primeColor">
+                  {product2?.price ? `$${product2.price}` : "-"}
+                </td>
+              </tr>
 
-        <table class="w-full divide-y divide-gray-200 mt-10">
-          <thead class="bg-gray-100">
-            <tr>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Feature
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Product A
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Product B
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Price
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                $49.99
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                $59.99
-              </td>
-            </tr>
-            <tr>
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                Spec
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <div class="w-3/4 ...">
-                  <div class="whitespace-normal ...">
-                    Ram: 4GB Rom: 32GB Chipset: Qualcom 365 Snapdragon gen 2
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                <div class="w-3/4 ...">
-                  <div class="whitespace-normal ...">
-                    Ram: 4GB Rom: 32GB Chipset: Qualcom 365 Snapdragon gen 2
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              {/* Category */}
+              <tr>
+                <td className="py-3 px-4 font-semibold text-gray-600 bg-gray-50">
+                  Category
+                </td>
+                <td className="py-3 px-4 text-gray-700">
+                  {product1?.category || "General"}
+                </td>
+                <td className="py-3 px-4 text-gray-700">
+                  {product2?.category || "General"}
+                </td>
+              </tr>
+
+              {/* Color */}
+              <tr>
+                <td className="py-3 px-4 font-semibold text-gray-600 bg-gray-50">
+                  Color Options
+                </td>
+                <td className="py-3 px-4 text-gray-700">
+                  {product1?.color || "Standard"}
+                </td>
+                <td className="py-3 px-4 text-gray-700">
+                  {product2?.color || "Standard"}
+                </td>
+              </tr>
+
+              {/* Badge / Availability */}
+              <tr>
+                <td className="py-3 px-4 font-semibold text-gray-600 bg-gray-50">
+                  Badge / Tag
+                </td>
+                <td className="py-3 px-4">
+                  {product1?.badge ? (
+                    <span className="inline-block px-2.5 py-0.5 text-xs font-semibold bg-black text-white rounded">
+                      New Arrival
+                    </span>
+                  ) : (
+                    <span className="text-gray-500">Regular</span>
+                  )}
+                </td>
+                <td className="py-3 px-4">
+                  {product2?.badge ? (
+                    <span className="inline-block px-2.5 py-0.5 text-xs font-semibold bg-black text-white rounded">
+                      New Arrival
+                    </span>
+                  ) : (
+                    <span className="text-gray-500">Regular</span>
+                  )}
+                </td>
+              </tr>
+
+              {/* Description */}
+              <tr>
+                <td className="py-3 px-4 font-semibold text-gray-600 bg-gray-50">
+                  Description
+                </td>
+                <td className="py-3 px-4 text-gray-600 leading-relaxed text-xs">
+                  {product1?.des || "-"}
+                </td>
+                <td className="py-3 px-4 text-gray-600 leading-relaxed text-xs">
+                  {product2?.des || "-"}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

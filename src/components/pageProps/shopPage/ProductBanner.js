@@ -11,15 +11,23 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
     const gridView = document.querySelector(".gridView");
     const listView = document.querySelector(".listView");
 
-    gridView.addEventListener("click", () => {
+    const handleGrid = () => {
       setListViewActive(false);
       setGridViewActive(true);
-    });
-    listView.addEventListener("click", () => {
+    };
+    const handleList = () => {
       setGridViewActive(false);
       setListViewActive(true);
-    });
-  }, [girdViewActive, listViewActive]);
+    };
+
+    if (gridView) gridView.addEventListener("click", handleGrid);
+    if (listView) listView.addEventListener("click", handleList);
+
+    return () => {
+      if (gridView) gridView.removeEventListener("click", handleGrid);
+      if (listView) listView.removeEventListener("click", handleList);
+    };
+  }, []);
 
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center justify-between">

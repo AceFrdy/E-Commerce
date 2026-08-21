@@ -29,7 +29,6 @@ import COD from "./pages/payment/page/COD";
 import Transfer from "./pages/payment/page/Transfer";
 import Qris from "./pages/payment/page/Qris";
 import ProductComparison from "./components/home/Products/component/ProductComparison";
-import { products } from "./components/home/Products/data/productsApi";
 import CatAcc from "./components/home/Category/Cat/CatAcc";
 import BelumBayar from "./pages/Account/pages/NavPesanan/BelumBayar";
 import Diambil from "./pages/Account/pages/NavPesanan/DiambilToko";
@@ -63,7 +62,7 @@ const router = createBrowserRouter(
         <Route index element={<Home />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
 
-        <Route path="/compare" element={<ProductComparison products={products} />}></Route>
+        <Route path="/compare" element={<ProductComparison />}></Route>
 
         <Route path="/konfirmasitransfer" element={<KonfirmTransfer />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
@@ -89,7 +88,6 @@ const router = createBrowserRouter(
       <Route path="/wishlistitem" element={<WishlistItem />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
-      <Route path="/compare" element={<ProductComparison />}></Route>
       {/* ==================== Admin Navlink here ===================== */}
     </Route>
   )
