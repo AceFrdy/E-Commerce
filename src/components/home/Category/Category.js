@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import Slider from "react-slick";
 import Heading from "../Products/Heading";
 import Product from "./ProductCategory";
@@ -14,6 +14,16 @@ import {
 } from "../../../assets/images/index";
 
 const Category = () => {
+  const [dragging, setDragging] = useState(false);
+
+  const handleBeforeChange = useCallback(() => {
+    setDragging(true);
+  }, []);
+
+  const handleAfterChange = useCallback(() => {
+    setDragging(false);
+  }, []);
+
   const categories = [
     {
       _id: "1",
@@ -76,6 +86,8 @@ const Category = () => {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
+    beforeChange: handleBeforeChange,
+    afterChange: handleAfterChange,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     responsive: [
@@ -117,6 +129,7 @@ const Category = () => {
                 _id={category._id}
                 img={category.img}
                 productName={category.productName}
+                dragging={dragging}
               />
             </div>
           ))}

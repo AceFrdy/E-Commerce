@@ -25,27 +25,28 @@ function Items({ currentItems }) {
   );
 }
 
-const Pagination = ({ itemsPerPage }) => {
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
+const Pagination = ({ itemsPerPage, category }) => {
   const [itemOffset, setItemOffset] = useState(0);
   const [itemStart, setItemStart] = useState(1);
 
-  // Simulate fetching items from another resources.
-  // (This could be items from props; or items loaded in a local state
-  // from an API endpoint with useEffect and useState)
-  const endOffset = itemOffset + itemsPerPage;
-  //   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
+  const filteredItems = category
+    ? items.filter((item) => {
+        if (!item.category) return false;
+        const normItemCat = item.category.toLowerCase().replace(/\s+/g, "");
+        const normCat = category.toLowerCase().replace(/\s+/g, "");
+        return normItemCat.includes(normCat) || normCat.includes(normItemCat);
+      })
+    : items;
 
-  // Invoke when user click to request another page.
+  const displayItems = filteredItems.length > 0 ? filteredItems : items;
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = displayItems.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(displayItems.length / itemsPerPage);
+
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
+    const newOffset = (event.selected * itemsPerPage) % displayItems.length;
     setItemOffset(newOffset);
-    // console.log(
-    //   `User requested page number ${event.selected}, which is offset ${newOffset},`
-    // );
     setItemStart(newOffset);
   };
 
@@ -69,8 +70,8 @@ const Pagination = ({ itemsPerPage }) => {
         />
 
         <p className="text-base font-normal text-lightText">
-          Products from {itemStart === 0 ? 1 : itemStart} to {endOffset} of{" "}
-          {items.length}
+          Products from {itemStart === 0 ? 1 : itemStart} to {Math.min(endOffset, displayItems.length)} of{" "}
+          {displayItems.length}
         </p>
       </div>
     </div>

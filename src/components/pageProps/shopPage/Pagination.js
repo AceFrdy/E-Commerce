@@ -26,16 +26,27 @@ function Items({ currentItems }) {
   );
 }
 
-const Pagination = ({ itemsPerPage }) => {
+const Pagination = ({ itemsPerPage, category }) => {
   const [itemOffset, setItemOffset] = useState(0);
   const [itemStart, setItemStart] = useState(1);
 
+  const filteredItems = category
+    ? items.filter((item) => {
+        if (!item.category) return false;
+        const normItemCat = item.category.toLowerCase().replace(/\s+/g, "");
+        const normCat = category.toLowerCase().replace(/\s+/g, "");
+        return normItemCat.includes(normCat) || normCat.includes(normItemCat);
+      })
+    : items;
+
+  const displayItems = filteredItems.length > 0 ? filteredItems : items;
+
   const endOffset = itemOffset + itemsPerPage;
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
+  const currentItems = displayItems.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(displayItems.length / itemsPerPage);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
+    const newOffset = (event.selected * itemsPerPage) % displayItems.length;
     setItemOffset(newOffset);
     setItemStart(newOffset + 1);
   };
@@ -59,8 +70,8 @@ const Pagination = ({ itemsPerPage }) => {
           activeClassName="bg-black text-white"
         />
         <p className="text-base font-normal text-lightText">
-          Products from {itemStart} to {Math.min(endOffset, items.length)} of{" "}
-          {items.length}
+          Products from {itemStart} to {Math.min(endOffset, displayItems.length)} of{" "}
+          {displayItems.length}
         </p>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const Api = axios.create({
-    baseURL: 'https://erp.digitalindustryagency.com/api',
+    baseURL: import.meta.env.VITE_APP_BASEURL || 'https://erp.digitalindustryagency.com/api',
 
     headers: {
         'Accept' : 'application/json',

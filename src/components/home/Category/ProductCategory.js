@@ -13,7 +13,11 @@ const ProductCategory = (props) => {
 
     const navigate = useNavigate();
     const productItem = props;
-    const handleProductDetails = () => {
+    const handleProductDetails = (e) => {
+        if (props.dragging) {
+            e?.preventDefault();
+            return;
+        }
         navigate(`/category/${rootId}`, {
             state: {
                 item: productItem,
