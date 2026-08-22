@@ -1,105 +1,114 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
 import { Dialog, DialogBody, Typography, Button } from "@material-tailwind/react";
 import { BsCheckCircleFill } from "react-icons/bs";
-// import ProductComparison from "../../../components/home/Products/component/ProductComparison";
-// import Confirmation  from "./Confirmation";
-// import { Konfirm } from "./Konfirm";
+import { FaMoneyBillWave, FaInfoCircle } from "react-icons/fa";
 
 const COD = () => {
-    // const dispatch = useDispatch();
-    const products = useSelector((state) => state.orebiReducer.products);
-    const [totalAmt, setTotalAmt] = useState("");
-    const [Pajak, setPajak] = useState("");
-    const [pilihKurir] = useState(10);
+  const reduxProducts = useSelector((state) => state.orebiReducer.products);
+  const defaultItems = [
+    { price: 300, quantity: 1 },
+    { price: 150, quantity: 2 },
+    { price: 320, quantity: 1 },
+  ];
+  const items = reduxProducts && reduxProducts.length > 0 ? reduxProducts : defaultItems;
 
-    const [open, setOpen] = React.useState(false);
+  const [totalAmt, setTotalAmt] = useState(0);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(!open);
 
-    const handleOpen = () => setOpen(!open);
+  useEffect(() => {
+    let price = 0;
+    items.forEach((item) => {
+      price += Number(item.price) * Number(item.quantity);
+    });
+    setTotalAmt(price);
+  }, [items]);
 
-    useEffect(() => {
-        let price = 0;
-        products.map((item) => {
-            price += item.price * item.quantity;
-            return price;
-        });
-        setTotalAmt(price);
-    }, [products]);
-    useEffect(() => {
-        if (totalAmt <= 200) {
-            setPajak(30);
-        } else if (totalAmt <= 400) {
-            setPajak(25);
-        } else if (totalAmt > 401) {
-            setPajak(20);
-        }
-    }, [totalAmt]);
-    return (
-        <div>
-            <Dialog className="w-full h-[60%] rounded-lg overflow-auto touch-auto" open={open} size="xl" handler={handleOpen}>
-                <DialogBody className="grid place-items-center gap-4">
-                    {/* <div className='fl gap-2'> */}
-                    <BsCheckCircleFill className='h-60 w-60' />
-                    <Typography variant="h3">
-                        Pesanan Sedang Di Proses!
-                    </Typography>
-                    <Button variant="gradient" onClick={handleOpen}>
-                        Keluar
-                    </Button>
-                    {/* </div> */}
-                </DialogBody>
-            </Dialog>
-            <div className="w-full h-full flex flex-col gap-10">
-                    <div className="w-full gap-4 flex justify-end mt-4">
-                        <div className="w-full flex flex-col gap-4">
-                        <h1 className="text-2xl font-semibold text-right">Cart totals</h1>
-                    <div>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-                            Harga Barang
-                            <span className="font-semibold tracking-wide font-titleFont">
-                                ${totalAmt}
-                            </span>
-                        </p>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-                            Pajak
-                            <span className="font-semibold tracking-wide font-titleFont">
-                                ${Pajak}
-                            </span>
-                        </p>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-                            Biaya Pengiriman
-                            <span className="font-semibold tracking-wide font-titleFont">
-                                ${pilihKurir}
-                            </span>
-                        </p>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-                            Coupon
-                            <span className="font-semibold tracking-wide font-titleFont">
-                                {20}%
-                            </span>
-                        </p>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 py-1.5 text-lg px-4 font-medium">
-                            Total
-                            <span className="font-bold tracking-wide text-lg font-titleFont">
-                                ${totalAmt + Pajak - (totalAmt * 20) / 100}
-                            </span>
-                        </p>
-                    </div>
-                            <div className="flex justify-center">
-                                {/* <Link to="/konfirmasitransfer"> */}
-                                    <button 
-                                        onClick={handleOpen}
-                                        className="w-52 h-10 bg-primeColor rounded-lg text-white hover:bg-black duration-300">
-                                        Proceed to Checkout
-                                    </button>
-                                {/* </Link> */}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  const pajak = totalAmt > 400 ? 20 : totalAmt > 200 ? 25 : 30;
+  const pilihKurir = 10;
+  const discountAmount = (totalAmt * 20) / 100;
+  const finalTotal = totalAmt + pajak + pilihKurir - discountAmount;
+
+  return (
+    <div className="flex flex-col gap-6">
+      <Dialog
+        className="w-full max-w-md rounded-xl p-4"
+        open={open}
+        handler={handleOpen}
+      >
+        <DialogBody className="flex flex-col items-center text-center gap-4 py-8">
+          <BsCheckCircleFill className="text-6xl text-green-500" />
+          <Typography variant="h4" className="font-bold text-primeColor font-titleFont">
+            Pesanan COD Berhasil Dibuat!
+          </Typography>
+          <p className="text-xs text-gray-500 max-w-xs">
+            Kurir kami akan menghubungi Anda saat melakukan pengantaran. Harap siapkan uang pas sebesar{" "}
+            <span className="font-bold text-primeColor">${finalTotal.toFixed(2)}</span>.
+          </p>
+          <Button
+            className="bg-primeColor hover:bg-black text-white text-xs px-6 py-2.5 rounded-lg mt-2"
+            onClick={handleOpen}
+          >
+            Selesai
+          </Button>
+        </DialogBody>
+      </Dialog>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        {/* COD Terms & Info */}
+        <div className="bg-white p-4 rounded-xl border border-gray-200 space-y-3">
+          <div className="flex items-center gap-2 text-primeColor font-bold text-xs uppercase tracking-wider">
+            <FaMoneyBillWave className="text-lg text-green-600" />
+            <span>Ketentuan Cash on Delivery (COD)</span>
+          </div>
+          <ul className="space-y-2 text-xs text-gray-600 list-disc pl-4 leading-relaxed">
+            <li>Pembayaran dilakukan secara tunai kepada kurir saat barang tiba.</li>
+            <li>Pastikan nomor HP penerima aktif dan dapat dihubungi.</li>
+            <li>Paket dapat dibuka setelah pembayaran lunas dilakukan ke kurir.</li>
+          </ul>
         </div>
-    );
+
+        {/* Totals & Place Order Button */}
+        <div className="bg-white p-4 rounded-xl border border-gray-200">
+          <h4 className="text-xs font-bold text-primeColor uppercase tracking-wider mb-3">
+            Rincian Tagihan COD
+          </h4>
+          <div className="space-y-2 text-xs text-gray-600">
+            <div className="flex justify-between">
+              <span>Subtotal Produk</span>
+              <span className="font-semibold text-gray-800">${totalAmt.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Biaya Penanganan / Pajak</span>
+              <span className="font-semibold text-gray-800">${pajak.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Biaya Pengiriman</span>
+              <span className="font-semibold text-gray-800">${pilihKurir.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-green-600 font-semibold">
+              <span>Diskon Kupon (20%)</span>
+              <span>-${discountAmount.toFixed(2)}</span>
+            </div>
+            <div className="pt-2 border-t border-gray-200 flex justify-between font-bold text-sm text-primeColor">
+              <span>Total Tagihan COD</span>
+              <span className="text-base font-extrabold">${finalTotal.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <button
+              onClick={handleOpen}
+              className="w-full py-2.5 bg-primeColor hover:bg-black text-white text-xs font-bold rounded-lg transition-colors shadow"
+            >
+              Buat Pesanan Sekarang (COD)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default COD;

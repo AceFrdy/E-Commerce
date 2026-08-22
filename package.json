@@ -1,6 +1,9 @@
 {
   "name": "orebishop",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=20"
+  },
   "private": true,
   "dependencies": {
     "@canvasjs/react-charts": "^1.0.0",

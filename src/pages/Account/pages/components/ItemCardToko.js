@@ -1,44 +1,23 @@
-import React from 'react'
-// import { useDispatch } from "react-redux";
-// import {
-//   deleteItem,
-//   drecreaseQuantity,
-//   increaseQuantity,
-// } from "../../../../redux/orebiSlice";
-// import { Link } from 'react-router-dom';
-// // import { FaTrash } from 'react-icons/fa';
-export const ItemCardToko = ({ item }) => {
-  //   const dispatch = useDispatch();
-  return (
-    <div className=" w-full grid grid-cols-3 mb-4 border py-2">
-      <div className="flex col-span-4 mdl:col-span-2 text-sm items-center gap-4 ml-4">
+import React from 'react';
 
-        <img className="w-16 h-16" src={item.image} alt="productImage" />
-        <h3 className="font-titleFont font-semibold">{item.name}
-          <p className='font-normal '>${item.price}</p>
-          <p className='font-normal'> Warna Ireng</p>
-        </h3>
+export const ItemCardToko = ({ item }) => {
+  return (
+    <div className="w-full bg-white border border-gray-200 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm hover:border-gray-300 transition-colors">
+      <div className="flex items-center gap-4 w-full sm:w-auto">
+        <div className="w-16 h-16 bg-[#F5F5F3] rounded-lg p-1 flex items-center justify-center shrink-0 border border-gray-100">
+          <img className="w-full h-full object-contain" src={item.image} alt={item.name} />
+        </div>
+        <div>
+          <h3 className="font-titleFont font-bold text-sm text-primeColor">{item.name}</h3>
+          <p className="text-xs text-gray-500">Warna: Standar</p>
+          <p className="text-sm font-extrabold text-primeColor">${item.price}</p>
+        </div>
       </div>
-      <div className="col-span-5 mdl:col-span-1 flex items-center justify-between py-4 mdl:py-0 px-4 mdl:px-0 gap-6 mdl:gap-0">
-        {/* <div className="flex w-1/3 items-center text-lg font-semibold">
-                    ${item.price}
-                </div> */}
-        <div className="flex ml-2 mr-2 w-1/3 items-center text-lg font-semibold text-lg">
-          {/* <Link to="/paymentgateway">
-                        <span
-                            className="text-primeColor hover:text-red-500 duration-300 cursor-pointer"
-                        >Bayar</span>
-                    </Link> */}
-        </div>
-        <div className="relative flex items-center">
-          <div className="flex ml-2 mr-2 w-1/3 items-center text-lg font-semibold text-lg">
-            <span
-              // onClick={() => dispatch(deleteItem(item._id))}
-              className="text-primeColor text-sm font-normal duration-300"
-            >Sudah Dibayar</span>
-          </div>
-        </div>
+      <div className="flex items-center gap-2 w-full sm:w-auto justify-end pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+        <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">
+          Siap Diambil di Toko
+        </span>
       </div>
     </div>
-  )
-}
+  );
+};

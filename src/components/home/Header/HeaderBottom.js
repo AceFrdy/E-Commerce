@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-// import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { FaSearch, FaUser, FaCaretDown, FaShoppingCart } from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
 
@@ -12,7 +11,12 @@ const HeaderBottom = () => {
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const ref = useRef();
+
+  const hideOnRoutes = ["/profile", "/alamat", "/pesanan", "/wishlistitem", "/profiledata", "/alamatisi"];
+  const shouldHide = hideOnRoutes.includes(location.pathname);
+
   useEffect(() => {
     const handleClick = (e) => {
       if (ref.current && ref.current.contains(e.target)) {
@@ -39,6 +43,10 @@ const HeaderBottom = () => {
     );
     setFilteredProducts(filtered);
   }, [searchQuery]);
+
+  if (shouldHide) {
+    return null;
+  }
 
   return (
     <div className="w-full bg-[#F5F5F3] relative">

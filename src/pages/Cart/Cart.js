@@ -1,154 +1,267 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
-import { emptyCart } from "../../assets/images/index";
 import ItemCard from "./ItemCard";
-import { FaShoppingCart } from "react-icons/fa";
-import { Card, CardBody, CardHeader, Button, Dialog, DialogBody, IconButton } from "@material-tailwind/react";
-import Keamanan from "./isiCart/Keamanan";
-import { Promo } from "./isiCart/Promo";
-import { Ringkasan } from "./isiCart/Ringkasan";
-import { Checkout } from "./isiCart/Checkout";
-import { Info } from "./isiCart/Info";
-import Warranty from "./isiCart/Warranty";
+import { FaShoppingCart, FaLock, FaMoneyBill, FaTag, FaShieldAlt } from "react-icons/fa";
+import { HiArrowsRightLeft } from "react-icons/hi2";
+import qris from "../../assets/images/qris.png";
+import { resetCart } from "../../redux/orebiSlice";
+import { spfOne, spfTwo, bestSellerOne } from "../../assets/images/index";
+
 const Cart = () => {
-  const products = useSelector((state) => state.orebiReducer.products);
-  const [totalAmt, setTotalAmt] = useState("");
-  const [, setPajak] = useState("");
+  const dispatch = useDispatch();
+  const reduxProducts = useSelector((state) => state.orebiReducer.products);
+
+  // Default dummy cart items fallback if Redux store is empty
+  const defaultCartItems = [
+    {
+      _id: "c101",
+      name: "MSI NB GS65 Thin 9SD",
+      price: 300.0,
+      quantity: 1,
+      image: spfOne,
+      colors: "Black",
+    },
+    {
+      _id: "c102",
+      name: "Poco X5 Pro 5G",
+      price: 150.0,
+      quantity: 2,
+      image: spfTwo,
+      colors: "Yellow",
+    },
+    {
+      _id: "c103",
+      name: "NVIDIA GeForce GTX 1650",
+      price: 320.0,
+      quantity: 1,
+      image: bestSellerOne,
+      colors: "Black",
+    },
+  ];
+
+  const [cartItems, setCartItems] = useState([]);
+  const [couponCode, setCouponCode] = useState("");
+  const [discountPercent, setDiscountPercent] = useState(0);
+  const [couponMessage, setCouponMessage] = useState("");
 
   useEffect(() => {
-    let price = 0;
-    products.forEach((item) => {
-      price += item.price * item.quantity;
-    });
-    setTotalAmt(price);
-  }, [products]);
-
-  useEffect(() => {
-    if (totalAmt <= 200) {
-      setPajak(30);
-    } else if (totalAmt <= 400) {
-      setPajak(25);
-    } else if (totalAmt > 401) {
-      setPajak(20);
+    if (reduxProducts && reduxProducts.length > 0) {
+      setCartItems(reduxProducts);
+    } else {
+      setCartItems(defaultCartItems);
     }
-  }, [totalAmt]);
-  const [open, setOpen] = React.useState(false);
+  }, [reduxProducts]);
 
-  const handleOpen = () => setOpen(!open);
+  const handleIncrease = (id) => {
+    setCartItems(
+      cartItems.map((item) =>
+        item._id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const handleDecrease = (id) => {
+    setCartItems(
+      cartItems.map((item) =>
+        item._id === id
+          ? { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 }
+          : item
+      )
+    );
+  };
+
+  const handleDelete = (id) => {
+    setCartItems(cartItems.filter((item) => item._id !== id));
+  };
+
+  const handleResetCart = () => {
+    setCartItems([]);
+    dispatch(resetCart());
+  };
+
+  const handleApplyCoupon = () => {
+    if (couponCode.toUpperCase() === "OREBI20" || couponCode.toUpperCase() === "DISCOUNT20") {
+      setDiscountPercent(20);
+      setCouponMessage("Kupon berhasil dipasang (Diskon 20%)!");
+    } else if (couponCode.trim() !== "") {
+      setCouponMessage("Kode kupon tidak valid. Gunakan: OREBI20");
+    }
+  };
+
+  const subTotal = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+  const discountAmount = (subTotal * discountPercent) / 100;
+  const shippingFee = subTotal > 0 ? 0 : 0; // Shipping free
+  const totalAmount = subTotal - discountAmount + shippingFee;
+
   return (
-    <>
-      <Dialog size={'lg'} className="w-full h-[90%] rounded-lg overflow-auto touch-auto" open={open} handler={handleOpen}>
-        <DialogBody>
-          <Warranty />
-        </DialogBody>
-      </Dialog>
-      <div className="mx-auto px-4">
-        <Breadcrumbs title="Cart" />
-        {products.length > 0 ? (
-          <div className="pb-20 grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Card
-                className="col-span-2"
-              >
-                <CardBody>
-                  <CardHeader
-                  shadow={false}>
-                    <div className="rounded-lg w-full bg-gray-100 h-full text-primeColor grid grid-cols-2 gap-2 px-3 text-lg font-titleFont font-semibold">
-                      <h2 className="mt-1  flex relative gap-2 ">
-                        <FaShoppingCart className="h-6 w-7 " />
-                        Product
-                      </h2>
-                    </div>
-                  </CardHeader>
-                  <div className="overflow-y-auto max-h-96 rounded-lg text-primeColor grid grid-flow-row gap-4 px-6 text-lg font-titleFont font-semibold">
-                    <CardBody>
-                      {products.map((item) => (
-                        <div key={item._id}>
-                          <ItemCard item={item} />
-                          <div className="flex items-center">
-                            <span className="flex items-center text-lg font-semibold">
-                              Orebi Care Warranty Extension
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={2}
-                                className="h-5 w-5 cursor-pointer text-blue-gray-500 ml-1"
-                                onClick={handleOpen}
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                                />
-                              </svg>
-                            </span>
-                          </div>
-                          <Keamanan />
-                        </div>
-                      ))}
-                    </CardBody>
-                    {/* <CardFooter>
-                  </CardFooter> */}
+    <div className="max-w-container mx-auto px-4 py-6">
+      <Breadcrumbs title="Keranjang Belanja" />
+
+      {cartItems.length > 0 ? (
+        <div className="w-full pb-20 grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Product Items List (Left Side) */}
+          <div className="lg:col-span-2 flex flex-col gap-4">
+            <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-100">
+                <div className="flex items-center gap-2 text-primeColor font-bold font-titleFont text-lg">
+                  <FaShoppingCart className="text-xl" />
+                  <span>Daftar Produk ({cartItems.length})</span>
+                </div>
+                <button
+                  onClick={handleResetCart}
+                  className="text-xs text-red-600 hover:underline font-semibold"
+                >
+                  Kosongkan Keranjang
+                </button>
+              </div>
+
+              {/* Item Cards Container */}
+              <div className="space-y-4">
+                {cartItems.map((item) => (
+                  <ItemCard
+                    key={item._id}
+                    item={item}
+                    onIncrease={handleIncrease}
+                    onDecrease={handleDecrease}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </div>
+
+              {/* Warranty & Care Banner */}
+              <div className="mt-6 p-4 bg-[#F5F5F3] border border-gray-200 rounded-xl flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <FaShieldAlt className="text-primeColor text-2xl" />
+                  <div>
+                    <h4 className="text-xs font-bold text-primeColor">
+                      Orebi Care & Garansi Resmi 1 Tahun
+                    </h4>
+                    <p className="text-[11px] text-gray-500">
+                      Perlindungan produk terjamin dengan layanan pengembalian mudah.
+                    </p>
                   </div>
-                  <Info />
-                </CardBody>
-              </Card>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              <Card>
-                <CardBody className="relative bg-[#F5F7F7] rounded-lg text-primeColor grid grid-rows-1 grid-cols-1 gap-2 text-lg font-titleFont font-semibold">
-                  <Promo />
-                </CardBody>
-              </Card>
-              <Card>
-                <CardBody className="relative h-64 rounded-lg bg-[#F5F7F7] text-primeColor grid grid-rows-3 grid-cols-1 gap-4">
-                  <Ringkasan />
-                </CardBody>
-              </Card>
-              <Card>
-                <CardBody className="relative h-64 rounded-lg bg-[#F5F7F7] text-primeColor grid grid-rows-3 grid-cols-2 gap-4">
-                  <Checkout />
-                </CardBody>
-              </Card>
+                </div>
+              </div>
             </div>
           </div>
-        ) : (
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            className="flex flex-col lg:flex-row justify-center items-center gap-4 pb-20"
-          >
-            <div>
-              <img
-                className="w-80 rounded-lg p-4 mx-auto"
-                src={emptyCart}
-                alt="emptyCart"
-              />
+
+          {/* Cart Summary & Checkout (Right Side) */}
+          <div className="lg:col-span-1 flex flex-col gap-6">
+            {/* Promo / Coupon Box */}
+            <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+              <h3 className="text-sm font-bold font-titleFont text-primeColor mb-3 flex items-center gap-2">
+                <FaTag className="text-xs" />
+                Kode Promo / Kupon
+              </h3>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  placeholder="Masukkan OREBI20"
+                  className="w-full h-10 border border-gray-300 rounded-lg px-3 text-xs outline-none focus:border-primeColor uppercase"
+                />
+                <button
+                  onClick={handleApplyCoupon}
+                  className="px-4 py-2 bg-primeColor hover:bg-black text-white text-xs font-semibold rounded-lg transition-colors"
+                >
+                  Terapkan
+                </button>
+              </div>
+              {couponMessage && (
+                <p
+                  className={`text-[11px] mt-2 font-medium ${
+                    discountPercent > 0 ? "text-green-600" : "text-red-500"
+                  }`}
+                >
+                  {couponMessage}
+                </p>
+              )}
             </div>
-            <div className="max-w-[500px] p-4 py-8 bg-white flex gap-4 flex-col items-center rounded-md shadow-lg">
-              <h1 className="font-titleFont text-xl font-bold uppercase">
-                Your Cart feels lonely.
-              </h1>
-              <p className="text-sm text-center px-10 -mt-2">
-                Your Shopping cart lives to serve. Give it purpose - fill it with
-                books, electronics, videos, etc. and make it happy.
-              </p>
-              <Link to="/shop">
-                <button className="bg-primeColor rounded-md cursor-pointer hover:bg-black active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">
-                  Continue Shopping
+
+            {/* Order Summary Box */}
+            <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+              <h3 className="text-sm font-bold font-titleFont text-primeColor mb-4 pb-2 border-b border-gray-100">
+                Ringkasan Belanja
+              </h3>
+              <div className="space-y-3 text-xs text-gray-600">
+                <div className="flex justify-between items-center">
+                  <span>Subtotal Produk</span>
+                  <span className="font-bold text-gray-800">
+                    ${subTotal.toFixed(2)}
+                  </span>
+                </div>
+                {discountPercent > 0 && (
+                  <div className="flex justify-between items-center text-green-600 font-semibold">
+                    <span>Diskon Kupon ({discountPercent}%)</span>
+                    <span>-${discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center">
+                  <span>Estimasi Pengiriman</span>
+                  <span className="text-green-600 font-bold">Gratis</span>
+                </div>
+                <div className="pt-3 border-t border-gray-100 flex justify-between items-center text-sm font-bold text-primeColor">
+                  <span>Total Pembayaran</span>
+                  <span className="text-base font-extrabold">
+                    ${totalAmount.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Checkout Button */}
+              <Link to="/paymentgateway">
+                <button className="w-full mt-6 py-3 bg-primeColor hover:bg-black text-white text-sm font-bold rounded-lg transition-colors shadow flex items-center justify-center gap-2">
+                  <FaLock className="text-xs" />
+                  Proceed to Checkout
                 </button>
               </Link>
+
+              {/* Payment Methods Info */}
+              <div className="mt-6 pt-4 border-t border-gray-100 text-center">
+                <p className="text-[11px] text-gray-400 font-semibold mb-3">
+                  Metode Pembayaran Aman
+                </p>
+                <div className="flex items-center justify-center gap-6 text-gray-500">
+                  <div className="flex flex-col items-center">
+                    <FaMoneyBill className="text-xl mb-1 text-gray-700" />
+                    <span className="text-[10px] font-semibold">COD</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <HiArrowsRightLeft className="text-xl mb-1 text-gray-700" />
+                    <span className="text-[10px] font-semibold">Transfer</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <img src={qris} alt="QRIS" className="h-5 object-contain" />
+                    <span className="text-[10px] font-semibold mt-1">QRIS</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </motion.div>
-        )}
-      </div>
-    </>
+          </div>
+        </div>
+      ) : (
+        <div className="py-16 flex flex-col items-center text-center">
+          <FaShoppingCart className="text-6xl text-gray-300 mb-4" />
+          <h2 className="text-lg font-bold font-titleFont text-primeColor mb-2">
+            Keranjang Belanja Anda Kosong
+          </h2>
+          <p className="text-xs text-gray-500 max-w-sm mb-6">
+            Temukan berbagai produk berkualitas di katalog toko kami.
+          </p>
+          <Link to="/shop">
+            <button className="px-6 py-2.5 bg-primeColor hover:bg-black text-white text-xs font-semibold rounded-lg transition-colors">
+              Mulai Belanja Now
+            </button>
+          </Link>
+        </div>
+      )}
+    </div>
   );
 };
 

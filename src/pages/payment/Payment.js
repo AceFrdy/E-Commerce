@@ -1,245 +1,230 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-// import { Link } from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
-// import { GoTriangleDown } from "react-icons/go";
 import ItemCheck from "./ItemCheck";
-import { MdLocationPin } from "react-icons/md";
-import {
-  Card,
-  CardBody,
-  Input,
-  Tabs,
-  TabsHeader,
-  TabsBody,
-  Tab,
-  TabPanel,
-  Textarea,
-  Select,
-  Option,
-} from '@material-tailwind/react'
+import { MdLocationPin, MdEdit, MdCheck } from "react-icons/md";
+import { FaTruck, FaMoneyBill, FaQrcode, FaCreditCard } from "react-icons/fa";
 import Transfer from "./page/Transfer";
 import COD from "./page/COD";
 import Qris from "./page/Qris";
-// import Transfer from "./page/Transfer";
-// import COD from "./page/COD";
+import { spfOne, spfTwo, bestSellerOne } from "../../assets/images/index";
 
 const Payment = () => {
-  const products = useSelector((state) => state.orebiReducer.products);
-  const [totalAmt, setTotalAmt] = useState("");
-  const [, setPajak] = useState("");
-  const [pilihKurir,] = useState(10);
+  const reduxProducts = useSelector((state) => state.orebiReducer.products);
+
+  const defaultPurchasedProducts = [
+    {
+      _id: "p101",
+      name: "MSI NB GS65 Thin 9SD",
+      price: 300.0,
+      quantity: 1,
+      image: spfOne,
+      colors: "Black",
+    },
+    {
+      _id: "p102",
+      name: "Poco X5 Pro 5G",
+      price: 150.0,
+      quantity: 2,
+      image: spfTwo,
+      colors: "Yellow",
+    },
+    {
+      _id: "p103",
+      name: "NVIDIA GeForce GTX 1650",
+      price: 320.0,
+      quantity: 1,
+      image: bestSellerOne,
+      colors: "Black",
+    },
+  ];
+
+  const purchasedProducts =
+    reduxProducts && reduxProducts.length > 0
+      ? reduxProducts
+      : defaultPurchasedProducts;
 
   const [editable, setEditable] = useState(false);
-  const [name, setName] = useState("Prawira");
-  const [phone, setPhone] = useState("+62) 82278567894");
+  const [name, setName] = useState("John Doe");
+  const [phone, setPhone] = useState("08123456789");
   const [address, setAddress] = useState(
-    "Gg. Ontoseno No.96 Jaranan Banguntapan (Kos Laki 97A), KAB, Bantul Banguntapan,Yogyakarta"
+    "Jalan Malioboro No. 123, Kel. Sosromenduran, Kec. Gedongtengen, Yogyakarta 55271"
   );
 
-  const handleEditClick = () => {
-    setEditable(true);
+  const [courierOption, setCourierOption] = useState("standard");
+  const [courierFee, setCourierFee] = useState(10);
+  const [paymentTab, setPaymentTab] = useState("transfer");
+
+  const handleCourierChange = (e) => {
+    const val = e.target.value;
+    setCourierOption(val);
+    if (val === "standard") setCourierFee(10);
+    else if (val === "express") setCourierFee(20);
+    else if (val === "self") setCourierFee(0);
   };
 
-  const handleSaveClick = () => {
-    setEditable(false);
-    // Lakukan sesuatu dengan data yang telah diubah
-  };
-
-  useEffect(() => {
-    let price = 0;
-    products.map((item) => {
-      price += item.price * item.quantity;
-      return price;
-    });
-    setTotalAmt(price);
-  }, [products]);
-  useEffect(() => {
-    if (totalAmt <= 200) {
-      setPajak(30);
-    } else if (totalAmt <= 400) {
-      setPajak(25);
-    } else if (totalAmt > 401) {
-      setPajak(20);
-    }
-  }, [totalAmt]);
-  const [type, setType] = React.useState("card");
   return (
-    <div className="max-w-container mx-auto px-4">
+    <div className="max-w-container mx-auto px-4 py-6">
       <Breadcrumbs title="Payment Checkout" />
-      <Card
-        shadow={false}>
-        <CardBody>
-          <div className="mb-2 text-primeColor text-lg font-bold border-b-[0px] flex items-center justify-start gap-2 pb-1 w-full">
-            <span>
-              <MdLocationPin />
-            </span>
-            Alamat Pengiriman
+
+      <div className="w-full pb-20 flex flex-col gap-8">
+        {/* 1. Delivery Address Card */}
+        <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+          <div className="flex items-center justify-between pb-3 mb-4 border-b border-gray-100">
+            <div className="flex items-center gap-2 text-primeColor font-bold font-titleFont text-base">
+              <MdLocationPin className="text-xl text-red-600" />
+              <span>Alamat Pengiriman</span>
+            </div>
+            <button
+              onClick={() => setEditable(!editable)}
+              className="text-xs text-primeColor hover:text-black font-semibold flex items-center gap-1 bg-gray-100 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              {editable ? <MdCheck /> : <MdEdit />}
+              {editable ? "Simpan" : "Ubah Alamat"}
+            </button>
           </div>
-          <div className="flex flex-col items-center text-primeColor text-md font-titleFont">
-            <div className="w-full">
-              {editable ? (
-                <Input
-                  variant="static"
+
+          {editable ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div>
+                <label className="font-semibold text-gray-700 block mb-1">Nama Penerima</label>
+                <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  label="Nama"
+                  className="w-full h-10 border border-gray-300 rounded-lg px-3 text-xs outline-none focus:border-primeColor"
                 />
-              ) : (
-                name
-              )}
-            </div>
-            <div className="mt-4 w-full">
-              {editable ? (
-                <Input
-                  variant="static"
+              </div>
+              <div>
+                <label className="font-semibold text-gray-700 block mb-1">No. Handphone</label>
+                <input
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  label="Nomor Handphone"
+                  className="w-full h-10 border border-gray-300 rounded-lg px-3 text-xs outline-none focus:border-primeColor"
                 />
-              ) : (
-                phone
-              )}
-            </div>
-            <div className="mt-4 w-full">
-              {editable ? (
-                <Textarea
-                  variant="static"
+              </div>
+              <div className="md:col-span-2">
+                <label className="font-semibold text-gray-700 block mb-1">Alamat Lengkap</label>
+                <textarea
+                  rows="2"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
-                  label="Alamat"
-                />
-              ) : (
-                address
-              )}
-            </div>
-            <div className="mt-4 w-full">
-              {editable ? (
-                <button
-                  className="w-full rounded-md mb-2 h-10 bg-primeColor text-white text-lg hover:bg-black duration-300"
-                  onClick={handleSaveClick}
-                >
-                  Simpan
-                </button>
-              ) : (
-                <button
-                  className="w-full rounded-md mb-2 h-10 bg-primeColor text-white text-lg hover:bg-black duration-300"
-                  onClick={handleEditClick}
-                >
-                  Ubah
-                </button>
-              )}
-            </div>
-          </div>
-        </CardBody>
-      </Card>
-      {/* <div className="pb-10"> */}
-      <div className="pb-20">
-        <p className="text-lg font-bold">Product Yang Dibeli</p>
-
-        <table className="mt-5  mt-2 divide-y-2 divide-gray-400/25 rounded-lg h-full bg-[#F5F7F7] text-primeColor lgl:grid auto-rows-auto grid-row-1 grid-flow-row gap-4 px-6 text-lg font-titleFont font-semibold">
-          <thead className="border-collapse border w-full">
-            <tr className="border-b grid grid-cols-12">
-              <th className="p-4 col-span-3">Image</th>
-              <th className="p-4 col-span-3">Product</th>
-              <th className="p-4 col-span-3">Quantity</th>
-              <th className="p-4 col-span-3">Sub Total</th>
-            </tr>
-          </thead>
-          <tbody className="overflow-y-auto w-full max-h-80" >
-            {products.map((item) => (
-              <div key={item._id}>
-                <ItemCheck item={item} />
+                  className="w-full border border-gray-300 rounded-lg p-3 text-xs outline-none focus:border-primeColor"
+                ></textarea>
               </div>
-            ))}
-          </tbody>
-        </table>
-
-        <div className="flex flex-col mdl:flex-row justify-between border py-4 px-4 items-center gap-2 mdl:gap-0">
-          <div className="flex items-center gap-2 text-base text-[#767676] relative">
-            <label htmlFor="pilih-kurir" className="text-lg font-semibold" style={{ minWidth: '100px' }}>Pilih Kurir :</label>
-            <Select
-              label="Pengiriman"
-            // id="pilih-kurir"
-            // value={pilihKurir}
-            // onChange={(e) => setPilihKurir(parseFloat(e.target.value))}
-            // className="w-32 md:w-52 border-[1px] border-gray-200 py-1 px-4 cursor-pointer text-primeColor text-base block dark:placeholder-gray-400 appearance-none focus-within:outline-none focus-visible:border-primeColor"
-            >
-              <Option value={10}>Kurir</Option>
-              <Option value={0}>Ambil Sendiri</Option>
-              {/* <option value={20}>Express</option> */}
-            </Select>
-            {/* <span className="absolute text-sm right-2 md:right-4 top-2.5">
-              <GoTriangleDown />
-            </span> */}
-          </div>
-          <p className="text-lg font-semibold"><p className="flex items-center justify-between border-[0px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-            ${pilihKurir}
-            {/* <span className="font-semibold tracking-wide font-titleFont">
-                    
-                  </span> */}
-          </p></p>
+            </div>
+          ) : (
+            <div className="text-xs text-gray-700 leading-relaxed">
+              <p className="font-bold text-sm text-primeColor font-titleFont mb-1">
+                {name} <span className="text-gray-500 font-normal">({phone})</span>
+              </p>
+              <p className="text-gray-600">{address}</p>
+            </div>
+          )}
         </div>
-        <div className="w-full flex flex-col space-y-4">
-          <Card className="w-full max-w-full">
-            <CardBody>
-              <Tabs value={type}>
-                <TabsHeader className="relative z-0 flex space-x-4 overflow-x-auto">
-                  <Tab value="transfer" onClick={() => setType("transfer")}>
-                    Transfer
-                  </Tab>
-                  <Tab value="COD" onClick={() => setType("COD")}>
-                    COD
-                  </Tab>
-                  <Tab value="Qris" onClick={() => setType("Qris")}>
-                    Qris
-                  </Tab>
-                </TabsHeader>
-                <TabsBody
-                  className="flex flex-col"
-                  animate={{
-                    initial: {
-                      x: type === "card" ? 250 : -250,
-                    },
-                    mount: {
-                      x: 0,
-                    },
-                    unmount: {
-                      x: type === "card" ? 250 : -250,
-                    },
-                  }}
-                >
-                  <TabPanel value="transfer" className="p-0 flex-1">
-                    <div className="w-full overflow-y-auto divide-y-2 divide-gray-400/25 rounded-lg bg-[#F5F7F7] text-primeColor">
-                      <div className="p-6">
-                        <Transfer />
-                      </div>
-                    </div>
-                  </TabPanel>
-                  <TabPanel value="COD" className="p-0 flex-1">
-                    <div className="w-full overflow-y-auto divide-y-2 divide-gray-400/25 rounded-lg bg-[#F5F7F7] text-primeColor">
-                      <div className="p-6">
-                        <COD />
-                      </div>
-                    </div>
-                  </TabPanel>
-                  <TabPanel value="Qris" className="p-0 flex-1">
-                    <div className="w-full overflow-y-auto divide-y-2 divide-gray-400/25 rounded-lg bg-[#F5F7F7] text-primeColor">
-                      <div className="p-6">
-                        <Qris />
-                      </div>
-                    </div>
-                  </TabPanel>
-                </TabsBody>
-              </Tabs>
-            </CardBody>
-          </Card>
+
+        {/* 2. Purchased Items Table */}
+        <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+          <h3 className="text-base font-bold font-titleFont text-primeColor mb-4 pb-3 border-b border-gray-100">
+            Produk Yang Dibeli
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[#F5F5F3] text-xs font-bold text-primeColor uppercase tracking-wider">
+                  <th className="py-3 px-4 rounded-l-lg">Produk</th>
+                  <th className="py-3 px-4 text-center">Harga</th>
+                  <th className="py-3 px-4 text-center">Jumlah</th>
+                  <th className="py-3 px-4 text-right rounded-r-lg">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                {purchasedProducts.map((item) => (
+                  <ItemCheck key={item._id} item={item} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 3. Shipping Options */}
+          <div className="mt-6 pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 w-full sm:w-auto">
+              <FaTruck className="text-primeColor text-lg shrink-0" />
+              <span className="text-xs font-bold text-gray-700 shrink-0">
+                Pilihan Pengiriman:
+              </span>
+              <select
+                value={courierOption}
+                onChange={handleCourierChange}
+                className="h-10 border border-gray-300 rounded-lg px-3 text-xs outline-none focus:border-primeColor bg-white font-semibold text-primeColor"
+              >
+                <option value="standard">Reguler Courier ($10.00)</option>
+                <option value="express">Express Courier ($20.00)</option>
+                <option value="self">Ambil Sendiri di Toko ($0.00)</option>
+              </select>
+            </div>
+            <div className="text-right">
+              <span className="text-xs text-gray-500 mr-2">Ongkos Kirim:</span>
+              <span className="text-sm font-extrabold text-primeColor">
+                ${courierFee.toFixed(2)}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. Payment Method Tabs */}
+        <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+          <h3 className="text-base font-bold font-titleFont text-primeColor mb-4 pb-3 border-b border-gray-100">
+            Metode Pembayaran
+          </h3>
+
+          {/* Tab Selector */}
+          <div className="flex border-b border-gray-200 gap-4 mb-6">
+            <button
+              onClick={() => setPaymentTab("transfer")}
+              className={`pb-3 px-4 text-xs font-bold flex items-center gap-2 border-b-2 transition-colors ${
+                paymentTab === "transfer"
+                  ? "border-primeColor text-primeColor"
+                  : "border-transparent text-gray-400 hover:text-gray-700"
+              }`}
+            >
+              <FaCreditCard className="text-sm" />
+              Bank Transfer
+            </button>
+            <button
+              onClick={() => setPaymentTab("cod")}
+              className={`pb-3 px-4 text-xs font-bold flex items-center gap-2 border-b-2 transition-colors ${
+                paymentTab === "cod"
+                  ? "border-primeColor text-primeColor"
+                  : "border-transparent text-gray-400 hover:text-gray-700"
+              }`}
+            >
+              <FaMoneyBill className="text-sm" />
+              COD (Bayar di Tempat)
+            </button>
+            <button
+              onClick={() => setPaymentTab("qris")}
+              className={`pb-3 px-4 text-xs font-bold flex items-center gap-2 border-b-2 transition-colors ${
+                paymentTab === "qris"
+                  ? "border-primeColor text-primeColor"
+                  : "border-transparent text-gray-400 hover:text-gray-700"
+              }`}
+            >
+              <FaQrcode className="text-sm" />
+              QRIS Instant
+            </button>
+          </div>
+
+          {/* Active Tab Panel */}
+          <div className="p-4 bg-[#F5F5F3] border border-gray-200 rounded-xl">
+            {paymentTab === "transfer" && <Transfer />}
+            {paymentTab === "cod" && <COD />}
+            {paymentTab === "qris" && <Qris />}
+          </div>
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 

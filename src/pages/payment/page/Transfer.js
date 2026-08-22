@@ -2,203 +2,154 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Konfirm } from "./Konfirm";
-import {
-    Radio,
-    Card,
-    List,
-    ListItem,
-    ListItemPrefix,
-    Typography,
-    Dialog, 
-    DialogBody,
-} from "@material-tailwind/react";
+import { Radio, Card, List, ListItem, ListItemPrefix, Typography, Dialog, DialogBody } from "@material-tailwind/react";
+import { spfOne, spfTwo, bestSellerOne } from "../../../assets/images/index";
 
 export function Transfer() {
-    // const dispatch = useDispatch();
-    const products = useSelector((state) => state.orebiReducer.products);
-    const [totalAmt, setTotalAmt] = useState("");
-    const [Pajak, setPajak] = useState("");
-    const [pilihKurir] = useState(10);
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(!open);
+  const reduxProducts = useSelector((state) => state.orebiReducer.products);
+  const defaultItems = [
+    { price: 300, quantity: 1 },
+    { price: 150, quantity: 2 },
+    { price: 320, quantity: 1 },
+  ];
+  const items = reduxProducts && reduxProducts.length > 0 ? reduxProducts : defaultItems;
 
-    useEffect(() => {
-        let price = 0;
-        products.map((item) => {
-            price += item.price * item.quantity;
-            return price;
-        });
-        setTotalAmt(price);
-    }, [products]);
-    useEffect(() => {
-        if (totalAmt <= 200) {
-            setPajak(30);
-        } else if (totalAmt <= 400) {
-            setPajak(25);
-        } else if (totalAmt > 401) {
-            setPajak(20);
-        }
-    }, [totalAmt]);
+  const [totalAmt, setTotalAmt] = useState(0);
+  const [selectedBank, setSelectedBank] = useState("BRI");
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(!open);
 
-    return (
-        <div className="flex flex-col space-y-4">
-            <Dialog
-                className="w-full h-[90%] rounded-lg overflow-auto touch-auto"
-                open={open}
-                size="xl"
-                handler={handleOpen}>
-                <DialogBody>
-                    <Konfirm />
-                </DialogBody>
-            </Dialog>
-            <div className="flex flex-col gap-4" >
-                <div className="mdl:inline-flex h-full">
-                    <div className="flex flex-col ml-20 ">
-                        <Card className="w-full"
-                        shadow={false}>
-                            <List>
-                                <ListItem className="p-0">
-                                    <label
-                                        htmlFor="vertical-list-bri"
-                                        className="flex w-full cursor-pointer items-center px-3 py-2"
-                                    >
-                                        <ListItemPrefix className="mr-3">
-                                            <Radio
-                                                name="vertical-list"
-                                                id="vertical-list-bri"
-                                                ripple={false}
-                                                className="hover:before:opacity-0"
-                                                containerProps={{
-                                                    className: "p-0",
-                                                }}
-                                            />
-                                        </ListItemPrefix>
-                                        <img
-                                            src="https://i0.wp.com/febi.uinsaid.ac.id/wp-content/uploads/2020/11/Logo-BRI-Bank-Rakyat-Indonesia-PNG-Terbaru.png?ssl=1"
-                                            alt="BRI Bank Logo"
-                                            className=" w-16"
-                                        />
-                                        <Typography
-                                            color="blue-gray"
-                                            className="font-medium text-blue-gray-400 ml-2"
-                                        >
-                                            BRI Bank
-                                        </Typography>
-                                    </label>
-                                </ListItem>
-                                <ListItem className="p-0">
-                                    <label
-                                        htmlFor="vertical-list-bri"
-                                        className="flex w-full cursor-pointer items-center px-3 py-2"
-                                    >
-                                        <ListItemPrefix className="mr-3">
-                                            <Radio
-                                                name="vertical-list"
-                                                id="vertical-list-bri"
-                                                ripple={false}
-                                                className="hover:before:opacity-0"
-                                                containerProps={{
-                                                    className: "p-0",
-                                                }}
-                                            />
-                                        </ListItemPrefix>
-                                        <img
-                                            src="https://upload.wikimedia.org/wikipedia/id/5/55/BNI_logo.svg"
-                                            alt="BRI Bank Logo"
-                                            className="w-20"
-                                        />
-                                        <Typography
-                                            color="blue-gray"
-                                            className="font-medium text-blue-gray-400 ml-2"
-                                        >
-                                            BNI Bank
-                                        </Typography>
-                                    </label>
-                                </ListItem>
-                                <ListItem className="p-0">
-                                    <label
-                                        htmlFor="vertical-list-bri"
-                                        className="flex w-full cursor-pointer items-center px-3 py-2"
-                                    >
-                                        <ListItemPrefix className="mr-3">
-                                            <Radio
-                                                name="vertical-list"
-                                                id="vertical-list-bri"
-                                                ripple={false}
-                                                className="hover:before:opacity-0"
-                                                containerProps={{
-                                                    className: "p-0",
-                                                }}
-                                            />
-                                        </ListItemPrefix>
-                                        <img
-                                            src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg"
-                                            alt="BRI Bank Logo"
-                                            className="w-20"
-                                        />
-                                        <Typography
-                                            color="blue-gray"
-                                            className="font-medium text-blue-gray-400 ml-2"
-                                        >
-                                            BCA Bank
-                                        </Typography>
-                                    </label>
-                                </ListItem>
-                            </List>
-                        </Card>
+  useEffect(() => {
+    let price = 0;
+    items.forEach((item) => {
+      price += Number(item.price) * Number(item.quantity);
+    });
+    setTotalAmt(price);
+  }, [items]);
+
+  const pajak = totalAmt > 400 ? 20 : totalAmt > 200 ? 25 : 30;
+  const pilihKurir = 10;
+  const discountAmount = (totalAmt * 20) / 100;
+  const finalTotal = totalAmt + pajak + pilihKurir - discountAmount;
+
+  return (
+    <div className="flex flex-col gap-6">
+      <Dialog
+        className="w-full max-h-[90vh] rounded-lg overflow-auto touch-auto"
+        open={open}
+        size="xl"
+        handler={handleOpen}
+      >
+        <DialogBody>
+          <Konfirm />
+        </DialogBody>
+      </Dialog>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        {/* Bank Selection */}
+        <div>
+          <h4 className="text-xs font-bold text-primeColor uppercase tracking-wider mb-3">
+            Pilih Bank Transfer
+          </h4>
+          <Card shadow={false} className="border border-gray-200">
+            <List className="p-1.5 space-y-1">
+              {[
+                {
+                  id: "BRI",
+                  name: "Bank BRI",
+                  logo: "https://i0.wp.com/febi.uinsaid.ac.id/wp-content/uploads/2020/11/Logo-BRI-Bank-Rakyat-Indonesia-PNG-Terbaru.png?ssl=1",
+                  account: "0981-7861-6578",
+                },
+                {
+                  id: "BNI",
+                  name: "Bank BNI",
+                  logo: "https://upload.wikimedia.org/wikipedia/id/5/55/BNI_logo.svg",
+                  account: "0234-8891-1200",
+                },
+                {
+                  id: "BCA",
+                  name: "Bank BCA",
+                  logo: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg",
+                  account: "8830-1928-3410",
+                },
+              ].map((bank) => {
+                const isSelected = selectedBank === bank.id;
+                return (
+                  <div
+                    key={bank.id}
+                    onClick={() => setSelectedBank(bank.id)}
+                    className={`p-3 rounded-lg flex items-center justify-between cursor-pointer border transition-all ${
+                      isSelected
+                        ? "border-primeColor bg-gray-50 shadow-sm"
+                        : "border-gray-100 hover:bg-gray-50/60"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="bank"
+                        checked={isSelected}
+                        onChange={() => setSelectedBank(bank.id)}
+                        className="accent-primeColor w-4 h-4 cursor-pointer"
+                      />
+                      <img
+                        src={bank.logo}
+                        alt={bank.name}
+                        className="w-14 h-8 object-contain"
+                      />
+                      <span className="text-xs font-bold text-gray-800">
+                        {bank.name}
+                      </span>
                     </div>
-                </div>
-                <div className="w-full h-full flex flex-col gap-10">
-                    <div className="w-full gap-4 flex justify-end mt-4">
-                        <div className="w-full flex flex-col gap-4">
-                        <h1 className="text-2xl font-semibold text-right">Cart totals</h1>
-                    <div>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-                            Harga Barang
-                            <span className="font-semibold tracking-wide font-titleFont">
-                                ${totalAmt}
-                            </span>
-                        </p>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-                            Pajak
-                            <span className="font-semibold tracking-wide font-titleFont">
-                                ${Pajak}
-                            </span>
-                        </p>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-                            Biaya Pengiriman
-                            <span className="font-semibold tracking-wide font-titleFont">
-                                ${pilihKurir}
-                            </span>
-                        </p>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 border-b-0 py-1.5 text-lg px-4 font-medium">
-                            Coupon
-                            <span className="font-semibold tracking-wide font-titleFont">
-                                {20}%
-                            </span>
-                        </p>
-                        <p className="flex items-center justify-between border-[1px] border-gray-400 py-1.5 text-lg px-4 font-medium">
-                            Total
-                            <span className="font-bold tracking-wide text-lg font-titleFont">
-                                ${totalAmt + Pajak - (totalAmt * 20) / 100}
-                            </span>
-                        </p>
-                    </div>
-                            <div className="flex justify-center">
-                                <Link to="/konfirmasitransfer">
-                                    <button
-                                        onClick={handleOpen}
-                                        className="w-52 h-10 bg-primeColor rounded-lg text-white hover:bg-black duration-300">
-                                        Proceed to Checkout
-                                    </button>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <span className="text-[11px] font-mono text-gray-500 font-semibold">
+                      {bank.account}
+                    </span>
+                  </div>
+                );
+              })}
+            </List>
+          </Card>
         </div>
-    );
-};
+
+        {/* Totals Summary & Confirm */}
+        <div className="bg-white p-4 rounded-xl border border-gray-200">
+          <h4 className="text-xs font-bold text-primeColor uppercase tracking-wider mb-3">
+            Rincian Pembayaran
+          </h4>
+          <div className="space-y-2 text-xs text-gray-600">
+            <div className="flex justify-between">
+              <span>Subtotal Produk</span>
+              <span className="font-semibold text-gray-800">${totalAmt.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Biaya Penanganan / Pajak</span>
+              <span className="font-semibold text-gray-800">${pajak.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Biaya Pengiriman</span>
+              <span className="font-semibold text-gray-800">${pilihKurir.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-green-600 font-semibold">
+              <span>Diskon Kupon (20%)</span>
+              <span>-${discountAmount.toFixed(2)}</span>
+            </div>
+            <div className="pt-2 border-t border-gray-200 flex justify-between font-bold text-sm text-primeColor">
+              <span>Total Akhir</span>
+              <span className="text-base font-extrabold">${finalTotal.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div className="mt-5">
+            <Link to="/konfirmasitransfer">
+              <button className="w-full py-2.5 bg-primeColor hover:bg-black text-white text-xs font-bold rounded-lg transition-colors shadow">
+                Konfirmasi & Petunjuk Transfer ({selectedBank})
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default Transfer;

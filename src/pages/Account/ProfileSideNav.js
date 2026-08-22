@@ -55,56 +55,74 @@ export function ProfileSideNav() {
 
   return (
     <>
-      <Card className="w-full p-4 shadow-md border border-gray-100 rounded-xl">
-        <div className="mb-2 px-3 py-2 border-b border-gray-100">
-          <Typography variant="h6" className="font-titleFont text-primeColor font-bold">
-            Akun Saya
-          </Typography>
+      <div className="w-full bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300">
+        {/* User Profile Info Header */}
+        <div className="flex items-center gap-3.5 pb-4 mb-4 border-b border-gray-100">
+          <div className="w-12 h-12 rounded-full bg-primeColor text-white flex items-center justify-center text-base font-extrabold font-titleFont shadow-sm shrink-0">
+            JD
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-1.5">
+              <h3 className="font-titleFont font-bold text-sm text-primeColor truncate">
+                John Doe
+              </h3>
+              <span className="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-1.5 py-0.2 rounded-full shrink-0">
+                Verified
+              </span>
+            </div>
+            <p className="text-xs text-gray-500 truncate mt-0.5">john.doe@example.com</p>
+          </div>
         </div>
-        <List className="p-0">
+
+        {/* Menu Section Label */}
+        <p className="hidden md:block text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-2">
+          Navigasi Akun
+        </p>
+
+        {/* Navigation Items */}
+        <div className="flex flex-row md:flex-col overflow-x-auto gap-1.5 scrollbar-hide">
           {navItems.map((item) => {
             const isActive = currentPath === item.link;
             return (
-              <Link key={item.link} to={item.link}>
-                <ListItem
-                  className={`flex items-center justify-between my-1 rounded-lg transition-colors ${
+              <Link key={item.link} to={item.link} className="shrink-0 md:shrink">
+                <div
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all duration-200 text-xs sm:text-sm whitespace-nowrap cursor-pointer ${
                     isActive
-                      ? "bg-primeColor text-white font-semibold hover:bg-black hover:text-white"
-                      : "text-gray-700 hover:bg-gray-100"
+                      ? "bg-primeColor text-white font-bold shadow-sm"
+                      : "text-gray-700 bg-gray-50 md:bg-transparent hover:bg-gray-100 hover:text-primeColor"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <ListItemPrefix className="m-0">
-                      {item.icon}
-                    </ListItemPrefix>
-                    <span>{item.title}</span>
+                    <span className="shrink-0">{item.icon}</span>
+                    <span className="font-titleFont">{item.title}</span>
                   </div>
                   {item.badge && (
-                    <ListItemSuffix>
-                      <Chip
-                        value={item.badge}
-                        size="sm"
-                        variant="ghost"
-                        color={isActive ? "white" : "blue-gray"}
-                        className="rounded-full px-2"
-                      />
-                    </ListItemSuffix>
+                    <span
+                      className={`ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        isActive
+                          ? "bg-white text-primeColor"
+                          : "bg-gray-200 text-gray-700"
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
                   )}
-                </ListItem>
+                </div>
               </Link>
             );
           })}
-          <ListItem
+
+          <div className="hidden md:block my-2 border-t border-gray-100" />
+
+          <button
             onClick={handleOpen}
-            className="flex items-center gap-3 text-red-600 hover:bg-red-50 hover:text-red-700 mt-2 rounded-lg"
+            className="flex items-center gap-3 text-red-600 hover:bg-red-50 hover:text-red-700 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm shrink-0 whitespace-nowrap transition-colors font-medium cursor-pointer"
           >
-            <ListItemPrefix className="m-0">
-              <PowerIcon className="h-5 w-5 text-red-600" />
-            </ListItemPrefix>
-            <span>Log Out</span>
-          </ListItem>
-        </List>
-      </Card>
+            <PowerIcon className="h-4 w-4 text-red-600 shrink-0" />
+            <span>Keluar dari Akun</span>
+          </button>
+        </div>
+      </div>
 
       <Dialog open={open} handler={handleOpen}>
         <DialogHeader className="font-titleFont text-lg">Konfirmasi Log Out</DialogHeader>

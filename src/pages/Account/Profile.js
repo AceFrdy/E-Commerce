@@ -12,7 +12,7 @@ const Profile = () => {
           <ProfileSideNav />
         </div>
         <div className="w-full md:w-3/4">
-          <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+          <div className="bg-white border border-gray-100 shadow-sm md:shadow-md rounded-xl p-3 sm:p-6">
             <ProfileData />
           </div>
         </div>

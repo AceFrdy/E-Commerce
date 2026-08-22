@@ -1,36 +1,43 @@
 import React from "react";
 
-const ItemCheck = (item) => {
-  // const product1 = "Nama Produk 1";
-  // const priceAddition = 10; // Harga tambahan yang ingin kamu tambahkan
-  // const subTotal = ;
+const ItemCheck = ({ item }) => {
+  if (!item) return null;
+
+  const title = item.name || item.productName || "Produk";
+  const image = item.image || item.img;
+  const price = Number(item.price) || 0;
+  const quantity = Number(item.quantity) || 1;
+  const color = item.colors || item.color || "Standar";
 
   return (
-    <table className="border-collapse border w-full">
-      <tbody>
-        <tr className="border-b grid grid-cols-12 gap-4">
-          <td className="p-4 col-span-4">
-            <img className="w-32 h-32 " src={item.image} alt="productImage" />
-          </td>
-          <td className="p-4 col-span-3 px-2">
-            <div className="font-titleFont font-semibold">{item.name}</div>
-            <div className="font-normal">${item.price}</div>
-            <div className="font-normal">Warna Ireng</div>
-          </td>
-          <td className="p-4 col-span-3">
-            <div className="flex items-center text-lg font-semibold">
-              <p>{item.quantity}</p>
-            </div>
-          </td>
-          <td className="p-4 col-span-2 px-2">
-            <div className="flex items-center font-titleFont font-bold text-lg ">
-              <p>${item.price * item.quantity}</p>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+    <tr className="border-b border-gray-200 hover:bg-gray-50/50 transition-colors text-xs text-gray-700">
+      <td className="py-3 px-4">
+        <div className="flex items-center gap-3">
+          <div className="w-14 h-14 bg-[#F5F5F3] rounded-lg p-1 flex items-center justify-center shrink-0 border border-gray-200">
+            <img
+              className="w-full h-full object-contain"
+              src={image}
+              alt={title}
+            />
+          </div>
+          <div>
+            <h4 className="font-bold text-sm text-primeColor font-titleFont line-clamp-1">
+              {title}
+            </h4>
+            <p className="text-[11px] text-gray-500">Warna: {color}</p>
+          </div>
+        </div>
+      </td>
+      <td className="py-3 px-4 text-center font-medium">
+        ${price.toFixed(2)}
+      </td>
+      <td className="py-3 px-4 text-center font-bold">
+        {quantity}
+      </td>
+      <td className="py-3 px-4 text-right font-extrabold text-primeColor text-sm">
+        ${(price * quantity).toFixed(2)}
+      </td>
+    </tr>
   );
 };
 

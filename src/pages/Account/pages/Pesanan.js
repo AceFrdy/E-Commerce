@@ -59,23 +59,23 @@ export const Pesanan = () => {
           <ProfileSideNav />
         </div>
         <div className="w-full md:w-3/4">
-          <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
-            <div className="pb-4 mb-6 border-b border-gray-100">
-              <h1 className="text-xl font-bold font-titleFont text-primeColor">
+          <div className="bg-white border border-gray-100 shadow-sm md:shadow-md rounded-xl p-3 sm:p-6">
+            <div className="pb-3 mb-4 border-b border-gray-100">
+              <h1 className="text-lg sm:text-xl font-bold font-titleFont text-primeColor">
                 Pesanan Saya
               </h1>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 mt-0.5">
                 Lacak status dan riwayat pemesanan Anda
               </p>
             </div>
 
             {/* Tabs Header */}
-            <div className="flex border-b border-gray-200 overflow-x-auto mb-6 scrollbar-hide">
+            <div className="flex border-b border-gray-200 overflow-x-auto gap-1 mb-4 pb-1 scrollbar-hide">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setType(tab.id)}
-                  className={`py-3 px-4 text-xs font-bold whitespace-nowrap border-b-2 transition-colors duration-200 ${
+                  className={`py-2.5 px-3 sm:px-4 text-xs font-bold whitespace-nowrap border-b-2 transition-colors duration-200 shrink-0 ${
                     type === tab.id
                       ? "border-primeColor text-primeColor"
                       : "border-transparent text-gray-500 hover:text-gray-700"

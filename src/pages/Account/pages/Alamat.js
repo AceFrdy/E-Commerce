@@ -69,7 +69,7 @@ const Alamat = () => {
           <ProfileSideNav />
         </div>
         <div className="w-full md:w-3/4">
-          <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+          <div className="bg-white border border-gray-100 shadow-sm md:shadow-md rounded-xl p-3 sm:p-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-gray-100">
               <div>
                 <h1 className="text-xl font-bold font-titleFont text-primeColor">

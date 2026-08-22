@@ -74,6 +74,10 @@ const router = createBrowserRouter(
         <Route path="/cod" element={<COD />}></Route>
         <Route path="/transfer" element={<Transfer />}></Route>
         <Route path="/qris" element={<Qris />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
+        <Route path="/alamat" element={<Alamat />}></Route>
+        <Route path="/pesanan" element={<Pesanan />}></Route>
+        <Route path="/wishlistitem" element={<WishlistItem />}></Route>
       </Route>
       <Route path="/profiledata" element={<ProfileData />}></Route>
       <Route path="/belumBa" element={<BelumBayar />}></Route>
@@ -81,11 +85,7 @@ const router = createBrowserRouter(
       <Route path="/dikirim" element={<Dikirim />}></Route>
       <Route path="/dikemas" element={<Dikemas />}></Route>
       <Route path="/pesananselesai" element={<PesananSelesai />}></Route>
-      <Route path="/alamat" element={<Alamat />}></Route>
       <Route path="/alamatisi" element={<AlamatEmpty />}></Route>
-      <Route path="/profile" element={<Profile />}></Route>
-      <Route path="/pesanan" element={<Pesanan />}></Route>
-      <Route path="/wishlistitem" element={<WishlistItem />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
       {/* ==================== Admin Navlink here ===================== */}

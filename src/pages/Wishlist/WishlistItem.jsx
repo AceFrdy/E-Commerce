@@ -67,7 +67,7 @@ export function WishlistItem() {
           <ProfileSideNav />
         </div>
         <div className="w-full md:w-3/4">
-          <div className="bg-white border border-gray-100 shadow-md rounded-xl p-6">
+          <div className="bg-white border border-gray-100 shadow-sm md:shadow-md rounded-xl p-3 sm:p-6">
             <div className="flex items-center justify-between pb-4 mb-6 border-b border-gray-100">
               <div>
                 <h1 className="text-xl font-bold font-titleFont text-primeColor">
