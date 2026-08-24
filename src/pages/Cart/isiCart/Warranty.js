@@ -25,7 +25,7 @@ const Warranty = () => {
                 {/* <div className="flex items-center justify-between mt-10">
                     <Link to="/">
                         <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
-                            © OREBI
+                            © DiaMo
                         </p>
                     </Link>
                     <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
@@ -44,7 +44,7 @@ const Warranty = () => {
                     <Link to="/">
                         <img src={logoLight} alt="logoImg" className="w-28 mt-4" />
                     </Link>
-                    <h2 className="text-2xl font-semibold text-black">Benefit from the advantages of our Orebi Care service:</h2>
+                    <h2 className="text-2xl font-semibold text-black">Benefit from the advantages of our DiaMo Care service:</h2>
                     <div className="w-[300px] flex items-start gap-3">
                         <span className="text-green-500 mt-1">
                             <BsCheckCircleFill />
@@ -76,7 +76,7 @@ const Warranty = () => {
                         </span>
                         <p className="text-base text-black-300">
                             <span className="text-black font-semibold font-titleFont">
-                                Orebi Certified Repair
+                                DiaMo Certified Repair
                             </span>
                             <br />
                             We only use original parts to ensure the reliability of our repairs
@@ -95,7 +95,7 @@ const Warranty = () => {
                         </p>
                     </div>
                     <p className="text-base text-black-300">
-                        You can subscribe to our warranty extension, Orebi Care, once your product has been added to the basket.
+                        You can subscribe to our warranty extension, DiaMo Care, once your product has been added to the basket.
                         <br />
                         * See the warranty extension conditions for more details
                     </p>
@@ -107,7 +107,7 @@ const Warranty = () => {
                     <div className="flex items-center justify-between mt-10">
                         <Link to="/">
                             <p className="text-sm font-titleFont font-semibold text-black-300 hover:text-green-500 cursor-pointer duration-300">
-                                © OREBI
+                                © DiaMo
                             </p>
                         </Link>
                         <p className="text-sm font-titleFont font-semibold text-black-300 hover:text-green-500 cursor-pointer duration-300">

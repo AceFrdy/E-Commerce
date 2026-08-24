@@ -14,8 +14,8 @@ const initialState = {
   
 };
 
-export const orebiSlice = createSlice({
-  name: "orebi",
+export const diamoSlice = createSlice({
+  name: "diamo",
   initialState,
   reducers: {
     addToCart: (state, action) => {
@@ -85,6 +85,6 @@ export const {
   drecreaseQuantity,
   deleteItem,
   resetCart,
-} = orebiSlice.actions;
-export default orebiSlice.reducer;
+} = diamoSlice.actions;
+export default diamoSlice.reducer;
 // export rootReducer

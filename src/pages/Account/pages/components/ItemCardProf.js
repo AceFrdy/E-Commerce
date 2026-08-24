@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteItem } from '../../../../redux/orebiSlice';
+import { deleteItem } from '../../../../redux/diamoSlice';
 import { Link } from 'react-router-dom';
 
 export const ItemCardProf = ({ item }) => {

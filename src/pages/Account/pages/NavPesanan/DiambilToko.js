@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom'
 import { Card, CardBody } from '@material-tailwind/react'
 import { ItemCardToko } from '../components/ItemCardToko'
 export const DiambilToko = () => {
-  const products = useSelector((state) => state.orebiReducer.products);
+  const products = useSelector((state) => state.diamoReducer.products);
   const [totalAmt, setTotalAmt] = useState("");
   const [, setPajak] = useState("");
   // const [selectedCoupon, setSelectedCoupon] = useState("");

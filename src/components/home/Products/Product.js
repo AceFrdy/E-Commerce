@@ -6,7 +6,7 @@ import Image from "../../designLayouts/Image";
 import Badge from "./Badge";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart, addToWishlist, } from "../../../redux/orebiSlice";
+import { addToCart, addToWishlist, } from "../../../redux/diamoSlice";
 import {
   Dialog,
   DialogBody,

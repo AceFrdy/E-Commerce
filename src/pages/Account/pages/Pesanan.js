@@ -14,7 +14,7 @@ import {
 } from '../../../assets/images/index';
 
 export const Pesanan = () => {
-  const reduxProducts = useSelector((state) => state.orebiReducer.products);
+  const reduxProducts = useSelector((state) => state.diamoReducer.products);
   const [type, setType] = useState("belum");
 
   const defaultOrders = [

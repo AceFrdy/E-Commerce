@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import { BsBookmarkHeart } from "react-icons/bs";
 
 const SpecialCase = () => {
-  const products = useSelector((state) => state.orebiReducer.products);
-  const productsWishlist = useSelector((state) => state.orebiReducer.products);
+  const products = useSelector((state) => state.diamoReducer.products);
+  const productsWishlist = useSelector((state) => state.diamoReducer.products);
   return (
     <div className="fixed top-52 right-2 z-20 hidden md:flex flex-col gap-2">
       <Link to="/signin">

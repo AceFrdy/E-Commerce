@@ -10,7 +10,7 @@ import Qris from "./page/Qris";
 import { spfOne, spfTwo, bestSellerOne } from "../../assets/images/index";
 
 const Payment = () => {
-  const reduxProducts = useSelector((state) => state.orebiReducer.products);
+  const reduxProducts = useSelector((state) => state.diamoReducer.products);
 
   const defaultPurchasedProducts = [
     {

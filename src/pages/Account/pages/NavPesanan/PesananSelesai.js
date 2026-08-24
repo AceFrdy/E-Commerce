@@ -7,7 +7,7 @@ import { Card, CardBody } from '@material-tailwind/react'
 import { Outlet } from 'react-router-dom'
 import { ItemCardSelesai } from '../components/ItemCardSelesai'
 export const PesananSelesai = () => {
-  const products = useSelector((state) => state.orebiReducer.products);
+  const products = useSelector((state) => state.diamoReducer.products);
   const [totalAmt, setTotalAmt] = useState("");
   const [, setPajak] = useState("");
   // const [selectedCoupon, setSelectedCoupon] = useState("");

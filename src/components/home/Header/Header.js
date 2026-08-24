@@ -31,8 +31,8 @@ const Header = () => {
       <nav className="h-full px-4 max-w-container mx-auto relative">
         <Flex className="flex items-center justify-between h-full">
           <Link to="/">
-            <div>
-              <Image className="w-20 object-cover" imgSrc={logo} />
+            <div className="font-bold text-2xl text-primeColor flex items-center gap-2">
+              Di aMo
             </div>
           </Link>
           <div>

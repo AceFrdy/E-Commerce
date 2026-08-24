@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { IoCopy } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 export const Ringkasan = () => {
-    const products = useSelector((state) => state.orebiReducer.products);
+    const products = useSelector((state) => state.diamoReducer.products);
     const [totalAmt, setTotalAmt] = useState("");
     const [, setPajak] = useState("");
     // const [selectedCoupon, setSelectedCoupon] = useState("");

@@ -6,7 +6,7 @@ import { Radio, Card, List, ListItem, ListItemPrefix, Typography, Dialog, Dialog
 import { spfOne, spfTwo, bestSellerOne } from "../../../assets/images/index";
 
 export function Transfer() {
-  const reduxProducts = useSelector((state) => state.orebiReducer.products);
+  const reduxProducts = useSelector((state) => state.diamoReducer.products);
   const defaultItems = [
     { price: 300, quantity: 1 },
     { price: 150, quantity: 2 },

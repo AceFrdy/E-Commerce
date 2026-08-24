@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Wishlist } from "./Wishlist";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import { ProfileSideNav } from "../Account/ProfileSideNav";
-import { deleteItem } from "../../redux/orebiSlice";
+import { deleteItem } from "../../redux/diamoSlice";
 import {
   spfThree,
   spfTwo,
@@ -13,7 +13,7 @@ import {
 
 export function WishlistItem() {
   const dispatch = useDispatch();
-  const reduxProducts = useSelector((state) => state.orebiReducer.products);
+  const reduxProducts = useSelector((state) => state.diamoReducer.products);
 
   const defaultWishlist = [
     {

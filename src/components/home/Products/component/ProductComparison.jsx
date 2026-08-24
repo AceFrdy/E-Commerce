@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../../redux/orebiSlice";
+import { addToCart } from "../../../../redux/diamoSlice";
 import { paginationItems } from "../../../../constants";
 import { FaShoppingCart, FaCheck } from "react-icons/fa";
 import { GoTriangleDown } from "react-icons/go";

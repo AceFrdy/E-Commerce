@@ -1,5 +1,5 @@
 import React from 'react';
-import { addToCart } from '../../../../redux/orebiSlice';
+import { addToCart } from '../../../../redux/diamoSlice';
 import { useDispatch } from 'react-redux';
 
 const ProductComparisonItem = ({ productInfo }) => {
