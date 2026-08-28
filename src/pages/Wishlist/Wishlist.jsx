@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteItem, addToCart } from '../../redux/diamoSlice';
+import { deleteItem, addToCart } from '../../redux/AstaSlice';
 import { FaShoppingCart, FaTrash, FaCheck } from 'react-icons/fa';
 
 export const Wishlist = ({ item, onDelete }) => {

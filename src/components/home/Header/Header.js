@@ -24,6 +24,7 @@ const Header = () => {
     };
     ResponsiveMenu();
     window.addEventListener("resize", ResponsiveMenu);
+    return () => window.removeEventListener("resize", ResponsiveMenu);
   }, []);
 
   return (
@@ -32,7 +33,7 @@ const Header = () => {
         <Flex className="flex items-center justify-between h-full">
           <Link to="/">
             <div className="font-bold text-2xl text-primeColor flex items-center gap-2">
-              Bmjir
+              Asta Shopping
             </div>
           </Link>
           <div>

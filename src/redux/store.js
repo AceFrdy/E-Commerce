@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import diamoReducer from "./diamoSlice";
+import AstaReducer from "./AstaSlice";
 
 const persistConfig = {
   key: "root",
@@ -18,10 +18,10 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, diamoReducer);
+const persistedReducer = persistReducer(persistConfig, AstaReducer);
 
 export const store = configureStore({
-  reducer: { diamoReducer: persistedReducer },
+  reducer: { AstaReducer: persistedReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

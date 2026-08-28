@@ -5,7 +5,7 @@ import { BsCheckCircleFill } from "react-icons/bs";
 import { FaMoneyBillWave, FaInfoCircle } from "react-icons/fa";
 
 const COD = () => {
-  const reduxProducts = useSelector((state) => state.diamoReducer.products);
+  const reduxProducts = useSelector((state) => state.AstaReducer.products);
   const defaultItems = [
     { price: 300, quantity: 1 },
     { price: 150, quantity: 2 },

@@ -15,7 +15,7 @@ const Footer = () => {
   const [emailInfo, setEmailInfo] = useState("");
   const [subscription, setSubscription] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  // const products = useSelector((state) => state.diamoReducer.products);
+  // const products = useSelector((state) => state.AstaReducer.products);
   const [show, setShow] = useState(false);
   // const [showUser, setShowUser] = useState(false);
   // const navigate = useNavigate();
@@ -54,10 +54,10 @@ const Footer = () => {
     <div className="w-full bg-[#F5F5F3] py-20">
       <div className="max-w-container mx-auto grid grid-cols-1 md:grid-cols-2  xl:grid-cols-6 px-4 gap-10">
         <div className="col-span-2">
-          <FooterListTitle title=" More about DiaMo Shop" />
+          <FooterListTitle title=" More about Asta Shop" />
           <div className="flex flex-col gap-6">
             <p className="text-base w-full xl:w-[80%]">
-              Discover the world of electronics with DiaMo Shop, where innovation meets technology.
+              Discover the world of electronics with Asta Shop, where innovation meets technology.
               Explore a diverse range of electronic devices and gadgets for every need and interest.
             </p>
             <div>

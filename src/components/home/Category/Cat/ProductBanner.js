@@ -7,19 +7,6 @@ const ProductBanner = ({ itemsPerPageFromBanner }) => {
   //   const [selected, setSelected] = useState("");
   const [girdViewActive, setGridViewActive] = useState(true);
   const [listViewActive, setListViewActive] = useState(false);
-  useEffect(() => {
-    const gridView = document.querySelector(".gridView");
-    const listView = document.querySelector(".listView");
-
-    gridView.addEventListener("click", () => {
-      setListViewActive(false);
-      setGridViewActive(true);
-    });
-    listView.addEventListener("click", () => {
-      setGridViewActive(false);
-      setListViewActive(true);
-    });
-  }, [girdViewActive, listViewActive]);
 
   return (
     <div className="w-full flex flex-col md:flex-row md:items-center justify-between">

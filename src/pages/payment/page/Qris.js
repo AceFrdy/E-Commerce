@@ -6,7 +6,7 @@ import { BsCheckCircleFill } from "react-icons/bs";
 import { FaQrcode, FaMobileAlt } from "react-icons/fa";
 
 const Qris = () => {
-  const reduxProducts = useSelector((state) => state.diamoReducer.products);
+  const reduxProducts = useSelector((state) => state.AstaReducer.products);
   const defaultItems = [
     { price: 300, quantity: 1 },
     { price: 150, quantity: 2 },
@@ -64,7 +64,7 @@ const Qris = () => {
           </div>
           <div className="p-3 bg-white border-2 border-dashed border-gray-300 rounded-xl mb-3 shadow-inner">
             <QRCodeCanvas
-              value={`https://diamo.store/pay?amount=${finalTotal}`}
+              value={`https://Asta.store/pay?amount=${finalTotal}`}
               size={180}
             />
           </div>

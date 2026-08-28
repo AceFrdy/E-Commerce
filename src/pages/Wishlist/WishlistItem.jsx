@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Wishlist } from "./Wishlist";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import { ProfileSideNav } from "../Account/ProfileSideNav";
-import { deleteItem } from "../../redux/diamoSlice";
+import { deleteItem } from "../../redux/AstaSlice";
 import {
   spfThree,
   spfTwo,
@@ -13,7 +13,7 @@ import {
 
 export function WishlistItem() {
   const dispatch = useDispatch();
-  const reduxProducts = useSelector((state) => state.diamoReducer.products);
+  const reduxWishlist = useSelector((state) => state.AstaReducer.productsWishlist);
 
   const defaultWishlist = [
     {
@@ -51,8 +51,14 @@ export function WishlistItem() {
   ];
 
   const [wishlistItems, setWishlistItems] = useState(
-    reduxProducts && reduxProducts.length > 0 ? reduxProducts : defaultWishlist
+    reduxWishlist && reduxWishlist.length > 0 ? reduxWishlist : defaultWishlist
   );
+
+  React.useEffect(() => {
+    if (reduxWishlist && reduxWishlist.length > 0) {
+      setWishlistItems(reduxWishlist);
+    }
+  }, [reduxWishlist]);
 
   const handleDeleteItem = (id) => {
     setWishlistItems(wishlistItems.filter((item) => item._id !== id));

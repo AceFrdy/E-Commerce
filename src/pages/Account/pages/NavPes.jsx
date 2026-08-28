@@ -14,7 +14,7 @@
 
 
 // export default function NavPes() {
-//   const products = useSelector((state) => state.diamoReducer.products);
+//   const products = useSelector((state) => state.AstaReducer.products);
 //   const [totalAmt, setTotalAmt] = useState("");
 //   const [, setPajak] = useState("");
 //   // const [selectedCoupon, setSelectedCoupon] = useState("");

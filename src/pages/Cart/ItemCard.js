@@ -5,7 +5,7 @@ import {
   deleteItem,
   drecreaseQuantity,
   increaseQuantity,
-} from "../../redux/diamoSlice";
+} from "../../redux/AstaSlice";
 
 const ItemCard = ({ item, onIncrease, onDecrease, onDelete }) => {
   const dispatch = useDispatch();

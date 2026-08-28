@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
 
 const HeaderBottom = () => {
-  const products = useSelector((state) => state.diamoReducer.products);
+  const products = useSelector((state) => state.AstaReducer.products);
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ const HeaderBottom = () => {
                 {searchQuery &&
                   filteredProducts.map((item) => (
                     <div
-                      onClick={() =>
+                      onClick={() => {
                         navigate(
                           `/product/${item.productName
                             .toLowerCase()
@@ -116,10 +116,10 @@ const HeaderBottom = () => {
                               item: item,
                             },
                           }
-                        ) &
-                        setShowSearchBar(true) &
-                        setSearchQuery("")
-                      }
+                        );
+                        setShowSearchBar(true);
+                        setSearchQuery("");
+                      }}
                       key={item._id}
                       className="max-w-[600px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
                     >
@@ -177,7 +177,7 @@ const HeaderBottom = () => {
               <div className="relative">
                 <FaShoppingCart />
                 <span className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white">
-                  {products.length > 0 ? products.length : 0}
+                  {products?.length ? products.length : 0}
                 </span>
               </div>
             </Link>

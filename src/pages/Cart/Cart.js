@@ -6,12 +6,12 @@ import ItemCard from "./ItemCard";
 import { FaShoppingCart, FaLock, FaMoneyBill, FaTag, FaShieldAlt } from "react-icons/fa";
 import { HiArrowsRightLeft } from "react-icons/hi2";
 import qris from "../../assets/images/qris.png";
-import { resetCart } from "../../redux/diamoSlice";
+import { resetCart } from "../../redux/AstaSlice";
 import { spfOne, spfTwo, bestSellerOne } from "../../assets/images/index";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const reduxProducts = useSelector((state) => state.diamoReducer.products);
+  const reduxProducts = useSelector((state) => state.AstaReducer.products);
 
   // Default dummy cart items fallback if Redux store is empty
   const defaultCartItems = [
@@ -82,11 +82,11 @@ const Cart = () => {
   };
 
   const handleApplyCoupon = () => {
-    if (couponCode.toUpperCase() === "DIAMO20" || couponCode.toUpperCase() === "DISCOUNT20") {
+    if (couponCode.toUpperCase() === "Asta20" || couponCode.toUpperCase() === "DISCOUNT20") {
       setDiscountPercent(20);
       setCouponMessage("Kupon berhasil dipasang (Diskon 20%)!");
     } else if (couponCode.trim() !== "") {
-      setCouponMessage("Kode kupon tidak valid. Gunakan: DIAMO20");
+      setCouponMessage("Kode kupon tidak valid. Gunakan: Asta20");
     }
   };
 
@@ -139,7 +139,7 @@ const Cart = () => {
                   <FaShieldAlt className="text-primeColor text-2xl" />
                   <div>
                     <h4 className="text-xs font-bold text-primeColor">
-                      DiaMo Care & Garansi Resmi 1 Tahun
+                      Asta Care & Garansi Resmi 1 Tahun
                     </h4>
                     <p className="text-[11px] text-gray-500">
                       Perlindungan produk terjamin dengan layanan pengembalian mudah.
@@ -163,7 +163,7 @@ const Cart = () => {
                   type="text"
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value)}
-                  placeholder="Masukkan DIAMO20"
+                  placeholder="Masukkan Asta20"
                   className="w-full h-10 border border-gray-300 rounded-lg px-3 text-xs outline-none focus:border-primeColor uppercase"
                 />
                 <button

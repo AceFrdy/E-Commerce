@@ -1,9 +1,9 @@
 import React from 'react';
-import { addToCart } from '../../../../redux/diamoSlice';
+import { addToCart } from '../../../../redux/AstaSlice';
 import { useDispatch } from 'react-redux';
 
 const ProductComparisonItem = ({ productInfo }) => {
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   return (
     <div className="border p-4">
       <h3>{productInfo.productName}</h3>

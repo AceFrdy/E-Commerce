@@ -32,6 +32,7 @@ const HeaderProf = () => {
     };
     ResponsiveMenu();
     window.addEventListener("resize", ResponsiveMenu);
+    return () => window.removeEventListener("resize", ResponsiveMenu);
   }, []);
 
   return (

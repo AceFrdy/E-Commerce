@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Navbar,
   MobileNav,
@@ -13,10 +14,9 @@ export const NavPes = () => {
   const [openNav, setOpenNav] = React.useState(false);
 
   React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
-    );
+    const handleResize = () => window.innerWidth >= 960 && setOpenNav(false);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
   const navList = (
     <ul className="mt-2 mx-2 justify-between mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -27,9 +27,9 @@ export const NavPes = () => {
         className="flex items-center hover:text-blue-500 transition-colors flex flex-col items-center gap-x-2 p-1 font-medium"
       >
         <FaWallet className="w-5 h-5" />
-        <a href="/belumBa" className="flex items-center">
+        <Link to="/belumBa" className="flex items-center">
           Belum Bayar
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -38,9 +38,9 @@ export const NavPes = () => {
         className="flex items-center hover:text-blue-500 transition-colors flex flex-col items-center gap-x-2 p-1 font-medium"
       >
         <FaHandHoldingUsd className="w-5 h-5" />
-        <a href="/ambil" className="flex items-center">
+        <Link to="/ambil" className="flex items-center">
           Diambil Di Toko
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -49,9 +49,9 @@ export const NavPes = () => {
         className="flex items-center hover:text-blue-500 transition-colors flex flex-col items-center gap-x-2 p-1 font-medium"
       >
         <LuPackageOpen className="w-5 h-5"/>
-        <a href="/dikemas" className="flex items-center">
+        <Link to="/dikemas" className="flex items-center">
           Dikemas
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -60,9 +60,9 @@ export const NavPes = () => {
         className="flex items-center hover:text-blue-500 transition-colors flex flex-col items-center gap-x-2 p-6 font-medium"
       >
         <FaTruck className='w-6 h-5' />
-        <a href="/dikirim" className="flex items-center">
+        <Link to="/dikirim" className="flex items-center">
           Dikirim
-        </a>
+        </Link>
       </Typography>
       <Typography
         as="li"
@@ -71,9 +71,9 @@ export const NavPes = () => {
         className="flex items-center hover:text-blue-500 transition-colors flex flex-col items-center gap-x-2 p-1 font-medium"
       >
         <BsCheckCircleFill className='w-5 h-5' />
-        <a href="/pesananselesai" className="flex items-center">
+        <Link to="/pesananselesai" className="flex items-center">
           Pesanan Selesai
-        </a>
+        </Link>
       </Typography>
     </ul>
   );
